@@ -26,9 +26,93 @@ class _GameViewState extends State<GameView> {
                 children: [
                   Align(
                     alignment: Alignment.topCenter,
-                    child: Text(
-                      '俄罗斯方块',
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    child: new Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          child: new Row(
+                            children: [
+                              Container(
+                                height: 5,
+                                width: 40,
+                                color: Colors.black,
+                                margin: const EdgeInsets.only(right: 5),
+                              ),
+                              Container(
+                                height: 5,
+                                width: 10,
+                                color: Colors.black,
+                                margin: const EdgeInsets.only(right: 5),
+                              ),
+                              Container(
+                                height: 5,
+                                width: 10,
+                                color: Colors.black,
+                                margin: const EdgeInsets.only(right: 5),
+                              ),
+                              Container(
+                                height: 5,
+                                width: 10,
+                                color: Colors.black,
+                                margin: const EdgeInsets.only(right: 5),
+                              ),
+                              Container(
+                                height: 5,
+                                width: 10,
+                                color: Colors.black,
+                                margin: const EdgeInsets.only(right: 5),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          color: Colors.red,
+                          child: new Text(
+                            '俄罗斯方块',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          child: new Row(
+                            children: [
+                              Container(
+                                height: 5,
+                                width: 40,
+                                color: Colors.black,
+                                margin: const EdgeInsets.only(right: 5),
+                              ),
+                              Container(
+                                height: 5,
+                                width: 10,
+                                color: Colors.black,
+                                margin: const EdgeInsets.only(right: 5),
+                              ),
+                              Container(
+                                height: 5,
+                                width: 10,
+                                color: Colors.black,
+                                margin: const EdgeInsets.only(right: 5),
+                              ),
+                              Container(
+                                height: 5,
+                                width: 10,
+                                color: Colors.black,
+                                margin: const EdgeInsets.only(right: 5),
+                              ),
+                              Container(
+                                height: 5,
+                                width: 10,
+                                color: Colors.black,
+                                margin: const EdgeInsets.only(right: 5),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Container(
