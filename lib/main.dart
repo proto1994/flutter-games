@@ -34,11 +34,13 @@ class _MyHomePageState extends State<MyHomePage> {
         decoration: BoxDecoration(color: Colors.yellow),
         child: Column(
           children: [
-            new GameView(),
+            new Expanded(
+              child: new GameView(),
+            ),
             Container(
               height: 300,
               decoration: BoxDecoration(color: Colors.blue),
-            )
+            ),
           ],
         ));
   }
