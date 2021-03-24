@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './gameView/gameView.dart';
+import './gameView/gameControl.dart';
 
 void main() {
   runApp(MyApp());
@@ -39,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Container(
               height: 300,
-              decoration: BoxDecoration(color: Colors.blue),
+              child: new GameControl(),
             ),
           ],
         ));
