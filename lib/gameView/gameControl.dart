@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../Widgets/buttonText.dart';
+import '../Widgets/triangle.dart';
+
 class GameControl extends StatefulWidget {
   @override
   _GameControlState createState() => _GameControlState();
@@ -8,58 +11,128 @@ class GameControl extends StatefulWidget {
 class _GameControlState extends State<GameControl> {
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.blue,
+      margin: const EdgeInsets.only(left: 20, top: 10, right: 20),
       child: new Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          new Expanded(
+          Container(
+            color: Colors.yellow,
             child: new Column(
               children: [
                 Container(
+                  margin: const EdgeInsets.only(bottom: 20),
                   child: new Row(
                     children: [
-                      Container(
-                        child: new Column(
-                          children: [
-                            Container(
-                              width: 26,
-                              height: 26,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 1,
-                                  color: Colors.black,
-                                ),
-                                boxShadow: [
-                                  //阴影
-                                  BoxShadow(
-                                    color: Colors.black54,
-                                    offset: Offset(2.0, 2.0),
-                                    blurRadius: 4.0,
-                                  )
-                                ],
-                                color: Color.fromRGBO(45, 196, 33, 1),
-                                borderRadius: BorderRadius.circular(26),
-                              ),
-                            ),
-                            Text(
-                              '暂停',
-                              style: TextStyle(
-                                fontSize: 11,
-                                color: Colors.black,
-                                decoration: TextDecoration.none,
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
+                      new ButtonText(
+                        width: 30,
+                        height: 30,
+                        color: Color.fromRGBO(45, 196, 33, 1),
+                        text: '暂停(P)',
+                        margin: const EdgeInsets.only(right: 15),
+                      ),
+                      new ButtonText(
+                        width: 30,
+                        height: 30,
+                        color: Color.fromRGBO(45, 196, 33, 1),
+                        text: '音效(S)',
+                        margin: const EdgeInsets.only(right: 15),
+                      ),
+                      new ButtonText(
+                        width: 30,
+                        height: 30,
+                        color: Color(0xffdd1a1a),
+                        text: '重玩(R)',
+                        margin: const EdgeInsets.only(right: 15),
+                      ),
                     ],
                   ),
                 ),
+                Container(
+                  child: new ButtonText(
+                    width: 100,
+                    height: 100,
+                    color: Color(0xff5a65f1),
+                    text: '掉落(SPACE)',
+                  ),
+                )
               ],
             ),
           ),
-          new Expanded(
-            child: Container(
-              child: Text('hell'),
+          Container(
+            color: Colors.yellow,
+            child: new Column(
+              children: [
+                Container(
+                  transform: Matrix4.translationValues(0, 15, 0),
+                  child: new ButtonText(
+                    width: 55,
+                    height: 55,
+                    color: Color(0xff5a65f1),
+                    text: '',
+                  ),
+                ),
+                new Row(
+                  children: [
+                    new ButtonText(
+                      width: 55,
+                      height: 55,
+                      color: Color(0xff5a65f1),
+                      text: '左移',
+                    ),
+                    new Container(
+                      width: 50,
+                      height: 60,
+                      child: new Stack(
+                        children: [
+                          Positioned(
+                            left: 25,
+                            top: 3,
+                            child: new Triangle(
+                              direction: 'top',
+                            ),
+                          ),
+                          Positioned(
+                            left: 5,
+                            top: 23,
+                            child: new Triangle(
+                              direction: 'left',
+                            ),
+                          ),
+                          Positioned(
+                            right: 5,
+                            top: 23,
+                            child: new Triangle(
+                              direction: 'right',
+                            ),
+                          ),
+                          Positioned(
+                            left: 25,
+                            bottom: 17,
+                            child: new Triangle(
+                              direction: 'bottom',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    new ButtonText(
+                      width: 55,
+                      height: 55,
+                      color: Color(0xff5a65f1),
+                      text: '右移',
+                    ),
+                  ],
+                ),
+                new Transform(
+                  transform: Matrix4.translationValues(0, -15, 0),
+                  child: new ButtonText(
+                    width: 55,
+                    height: 55,
+                    color: Color(0xff5a65f1),
+                    text: '下移',
+                  ),
+                )
+              ],
             ),
           )
         ],

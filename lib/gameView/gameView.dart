@@ -16,9 +16,7 @@ class _GameViewState extends State<GameView> {
         children: <Widget>[
           new Expanded(
             flex: 1,
-            child: Container(
-              color: Colors.red,
-            ),
+            child: Container(),
           ),
           new Expanded(
             flex: 8,
@@ -34,7 +32,6 @@ class _GameViewState extends State<GameView> {
               child: new Column(
                 children: [
                   Container(
-                    height: 30,
                     child: new Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,14 +68,15 @@ class _GameViewState extends State<GameView> {
                           ),
                         ),
                         Container(
-                          height: 100,
-                          transform: Matrix4.translationValues(0, -12, 0),
+                          transform: Matrix4.translationValues(0, 8, 0),
                           child: new Text(
                             '俄罗斯方块',
                             style: TextStyle(
                               fontSize: 20,
                               textBaseline: null,
                               color: Colors.black,
+                              height: 0,
+                              decoration: TextDecoration.none,
                             ),
                           ),
                         ),
@@ -119,7 +117,7 @@ class _GameViewState extends State<GameView> {
                   ),
                   new Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(30),
+                      padding: EdgeInsets.all(20),
                       child: Container(
                         decoration: BoxDecoration(
                           border: Border.all(
