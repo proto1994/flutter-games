@@ -33,15 +33,15 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(color: Colors.yellow),
+        padding: const EdgeInsets.only(top: 80),
         child: Column(
           children: [
+            new GameView(),
             new Expanded(
-              child: new GameView(),
-            ),
-            Container(
-              height: 300,
-              child: new GameControl(),
-            ),
+              child: Container(
+                child: new GameControl(),
+              ),
+            )
           ],
         ));
   }

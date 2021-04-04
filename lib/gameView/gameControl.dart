@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../Widgets/buttonText.dart';
 import '../Widgets/triangle.dart';
+import '../utils/eventBus.dart';
 
 class GameControl extends StatefulWidget {
   @override
@@ -64,20 +65,29 @@ class _GameControlState extends State<GameControl> {
               children: [
                 Container(
                   transform: Matrix4.translationValues(0, 15, 0),
-                  child: new ButtonText(
-                    width: 55,
-                    height: 55,
-                    color: Color(0xff5a65f1),
-                    text: '',
+                  child: Transform(
+                    transform: Matrix4.translationValues(0, 0, 0),
+                    child: new ButtonText(
+                      width: 55,
+                      height: 55,
+                      color: Color(0xff5a65f1),
+                      text: '上移',
+                    ),
                   ),
                 ),
                 new Row(
                   children: [
-                    new ButtonText(
-                      width: 55,
-                      height: 55,
-                      color: Color(0xff5a65f1),
-                      text: '左移',
+                    GestureDetector(
+                      onTap: () {
+                        print('点击左移');
+                        eventBus.emit('tetris', 'left');
+                      },
+                      child: new ButtonText(
+                        width: 55,
+                        height: 55,
+                        color: Color(0xff5a65f1),
+                        text: '左移',
+                      ),
                     ),
                     new Container(
                       width: 50,
@@ -115,21 +125,33 @@ class _GameControlState extends State<GameControl> {
                         ],
                       ),
                     ),
-                    new ButtonText(
-                      width: 55,
-                      height: 55,
-                      color: Color(0xff5a65f1),
-                      text: '右移',
-                    ),
+                    GestureDetector(
+                      onTap: () {
+                        print('点击右移');
+                        eventBus.emit('tetris', 'right');
+                      },
+                      child: new ButtonText(
+                        width: 55,
+                        height: 55,
+                        color: Color(0xff5a65f1),
+                        text: '右移',
+                      ),
+                    )
                   ],
                 ),
                 new Transform(
                   transform: Matrix4.translationValues(0, -15, 0),
-                  child: new ButtonText(
-                    width: 55,
-                    height: 55,
-                    color: Color(0xff5a65f1),
-                    text: '下移',
+                  child: GestureDetector(
+                    onTap: () {
+                      print('点击下移');
+                      eventBus.emit('tetris', 'down');
+                    },
+                    child: new ButtonText(
+                      width: 55,
+                      height: 55,
+                      color: Color(0xff5a65f1),
+                      text: '下移',
+                    ),
                   ),
                 )
               ],
