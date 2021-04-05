@@ -48,14 +48,20 @@ class _GameControlState extends State<GameControl> {
                     ],
                   ),
                 ),
-                Container(
-                  child: new ButtonText(
-                    width: 100,
-                    height: 100,
-                    color: Color(0xff5a65f1),
-                    text: '掉落(SPACE)',
+                GestureDetector(
+                  onTap: () {
+                    print('点击旋转');
+                    eventBus.emit('tetris', 'rotate');
+                  },
+                  child: Container(
+                    child: new ButtonText(
+                      width: 100,
+                      height: 100,
+                      color: Color(0xff5a65f1),
+                      text: '旋转',
+                    ),
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -143,8 +149,11 @@ class _GameControlState extends State<GameControl> {
                   transform: Matrix4.translationValues(0, -15, 0),
                   child: GestureDetector(
                     onTap: () {
-                      print('点击下移');
                       eventBus.emit('tetris', 'down');
+                    },
+                    onLongPress: () {
+                      print('长按');
+                      eventBus.emit('tetris', 'drop');
                     },
                     child: new ButtonText(
                       width: 55,
