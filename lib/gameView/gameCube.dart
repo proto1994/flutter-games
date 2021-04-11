@@ -13,16 +13,16 @@ class _GameCubeState extends State<GameCube> {
   @override
   void initState() {
     super.initState();
-    this.tetris = new Tetris();
-    this.tetris.start(() {
+    this.tetris = new Tetris(cb: () {
       this.setState(() {
         print('强制更新');
       });
     });
+    this.tetris.start();
     eventBus.on('tetris', (type) {
       switch (type) {
         case 'down':
-          this.tetris.down();
+          this.tetris.down(true);
           break;
         case 'left':
           this.tetris.left();
@@ -35,6 +35,15 @@ class _GameCubeState extends State<GameCube> {
           break;
         case 'drop':
           this.tetris.drop();
+          break;
+        case 'pause':
+          this.tetris.pause();
+          break;
+        case 'sound':
+          this.tetris.sound();
+          break;
+        case 'replay':
+          this.tetris.replay();
           break;
         default:
           break;

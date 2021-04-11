@@ -1,24 +1,34 @@
 import 'dart:async';
 import 'dart:math';
+
 import 'package:flutter_tetris/controller/constants.dart';
 
 import './square.dart';
+import './audio.dart';
 
 class Tetris {
   List<List<int>> gameSquares;
   List<List<int>> nextSquares;
   List<List<int>> curSquares;
   Point curPoint;
+  Timer timer;
   int rotateIndex;
   int suqareIndex;
-  Tetris() {
+  bool isPause;
+  bool isDropDown = false;
+  Function cb;
+  Audio bgm;
+  Tetris({cb}) {
     this.gameSquares = defaultGamePannel;
+    this.isPause = false;
+    this.cb = cb;
     this.nextSquares = [
       [0, 0, 0, 0],
       [0, 0, 0, 0],
       [0, 0, 0, 0],
       [0, 0, 0, 0],
     ];
+    this.bgm = new Audio();
     this.createCurSuqare();
   }
 
@@ -80,6 +90,7 @@ class Tetris {
   }
 
   rotate() {
+    this.bgm.playRotateAudio();
     if (this.checkCanRotate()) {
       this.rotateIndex++;
       if (this.rotateIndex == 4) this.rotateIndex = 0;
@@ -89,7 +100,10 @@ class Tetris {
     }
   }
 
-  down() {
+  down([bool isAuto = false]) {
+    if (isAuto) {
+      this.bgm.playMoveAudio();
+    }
     Point nextCurPoint = this.curPoint + new Point(1, 0);
     if (this.canDoNextOperating(nextCurPoint, this.curSquares)) {
       this.clearPrevCurPoint();
@@ -102,8 +116,12 @@ class Tetris {
   }
 
   drop() {
+    this.isDropDown = true;
     while (true) {
-      if (!this.down()) break;
+      if (!this.down()) {
+        this.bgm.playDropAudio();
+        break;
+      }
     }
   }
 
@@ -113,6 +131,7 @@ class Tetris {
   }
 
   left() {
+    this.bgm.playMoveAudio();
     Point nextCurPoint = this.curPoint - new Point(0, 1);
     if (this.canDoNextOperating(nextCurPoint, this.curSquares)) {
       this.clearPrevCurPoint();
@@ -122,6 +141,7 @@ class Tetris {
   }
 
   right() {
+    this.bgm.playMoveAudio();
     Point nextCurPoint = this.curPoint + new Point(0, 1);
     if (this.canDoNextOperating(nextCurPoint, this.curSquares)) {
       this.clearPrevCurPoint();
@@ -153,6 +173,7 @@ class Tetris {
 
   // 消行
   clearRow() {
+    bool hasRowFullSuqare = false;
     for (int i = this.gameSquares.length - 1; i >= 0; i--) {
       bool isNeedClear = true;
       for (int j = 0; j < this.gameSquares[i].length; j++) {
@@ -162,6 +183,7 @@ class Tetris {
         }
       }
       if (isNeedClear) {
+        hasRowFullSuqare = true;
         for (int n = i; n > 0; n--) {
           for (int m = 0; m < this.gameSquares[n].length; m++) {
             this.gameSquares[n][m] = this.gameSquares[n - 1][m];
@@ -170,20 +192,48 @@ class Tetris {
         i++;
       }
     }
+
+    return hasRowFullSuqare;
   }
 
-  start(cb) {
+  pause() {
+    if (!this.isPause) {
+      this.timer?.cancel();
+      this.isPause = true;
+    } else {
+      this.isPause = false;
+      this.start();
+    }
+  }
+
+  checkGameIsOver() {
+    return this.gameSquares[0].contains(1);
+  }
+
+  start() {
     this.copyCurPointToGameSquares();
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    this.timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
       print('afterTimer=' + DateTime.now().toString());
-      if (!this.down()) {
+      if (!this.down(false)) {
+        if (this.checkGameIsOver()) {
+          this.bgm.playGameOverAudio();
+          timer.cancel();
+          return;
+        }
         this.fixCurSquareToGamePannel();
-        this.clearRow();
+        if (this.clearRow()) {
+          this.bgm.playClearAudio();
+        } else {
+          if (!this.isDropDown) {
+            this.bgm.playDropAudio();
+          }
+          this.isDropDown = false;
+        }
         this.createCurSuqare();
         this.copyCurPointToGameSquares();
-        cb();
+        this.cb();
       } else {
-        cb();
+        this.cb();
       }
       // if (count >= 5) {
       //   //取消定时器，避免无限回调
@@ -191,5 +241,16 @@ class Tetris {
       //   timer = null;
       // }
     });
+  }
+
+  sound() {
+    this.bgm.toggleMute();
+  }
+
+  replay() {
+    print('print--');
+    this.timer?.cancel();
+    this.gameSquares = defaultGamePannel;
+    this.isPause = false;
   }
 }

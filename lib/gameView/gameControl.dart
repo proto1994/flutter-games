@@ -24,26 +24,44 @@ class _GameControlState extends State<GameControl> {
                   margin: const EdgeInsets.only(bottom: 20),
                   child: new Row(
                     children: [
-                      new ButtonText(
-                        width: 30,
-                        height: 30,
-                        color: Color.fromRGBO(45, 196, 33, 1),
-                        text: '暂停(P)',
-                        margin: const EdgeInsets.only(right: 15),
+                      GestureDetector(
+                        onTap: () {
+                          print('点击暂停');
+                          eventBus.emit('tetris', 'pause');
+                        },
+                        child: new ButtonText(
+                          width: 30,
+                          height: 30,
+                          color: Color.fromRGBO(45, 196, 33, 1),
+                          text: '暂停(P)',
+                          margin: const EdgeInsets.only(right: 15),
+                        ),
                       ),
-                      new ButtonText(
-                        width: 30,
-                        height: 30,
-                        color: Color.fromRGBO(45, 196, 33, 1),
-                        text: '音效(S)',
-                        margin: const EdgeInsets.only(right: 15),
+                      GestureDetector(
+                        onTap: () {
+                          print('点击音效');
+                          eventBus.emit('tetris', 'sound');
+                        },
+                        child: new ButtonText(
+                          width: 30,
+                          height: 30,
+                          color: Color.fromRGBO(45, 196, 33, 1),
+                          text: '音效(S)',
+                          margin: const EdgeInsets.only(right: 15),
+                        ),
                       ),
-                      new ButtonText(
-                        width: 30,
-                        height: 30,
-                        color: Color(0xffdd1a1a),
-                        text: '重玩(R)',
-                        margin: const EdgeInsets.only(right: 15),
+                      GestureDetector(
+                        onTap: () {
+                          print('点击重玩');
+                          eventBus.emit('tetris', 'replay');
+                        },
+                        child: new ButtonText(
+                          width: 30,
+                          height: 30,
+                          color: Color(0xffdd1a1a),
+                          text: '重玩(R)',
+                          margin: const EdgeInsets.only(right: 15),
+                        ),
                       ),
                     ],
                   ),
@@ -51,14 +69,14 @@ class _GameControlState extends State<GameControl> {
                 GestureDetector(
                   onTap: () {
                     print('点击旋转');
-                    eventBus.emit('tetris', 'rotate');
+                    eventBus.emit('tetris', 'drop');
                   },
                   child: Container(
                     child: new ButtonText(
                       width: 100,
                       height: 100,
                       color: Color(0xff5a65f1),
-                      text: '旋转',
+                      text: '下降',
                     ),
                   ),
                 ),
@@ -73,11 +91,17 @@ class _GameControlState extends State<GameControl> {
                   transform: Matrix4.translationValues(0, 15, 0),
                   child: Transform(
                     transform: Matrix4.translationValues(0, 0, 0),
-                    child: new ButtonText(
-                      width: 55,
-                      height: 55,
-                      color: Color(0xff5a65f1),
-                      text: '上移',
+                    child: GestureDetector(
+                      onTap: () {
+                        print('点击旋转');
+                        eventBus.emit('tetris', 'rotate');
+                      },
+                      child: new ButtonText(
+                        width: 55,
+                        height: 55,
+                        color: Color(0xff5a65f1),
+                        text: '旋转',
+                      ),
                     ),
                   ),
                 ),
@@ -150,10 +174,6 @@ class _GameControlState extends State<GameControl> {
                   child: GestureDetector(
                     onTap: () {
                       eventBus.emit('tetris', 'down');
-                    },
-                    onLongPress: () {
-                      print('长按');
-                      eventBus.emit('tetris', 'drop');
                     },
                     child: new ButtonText(
                       width: 55,
