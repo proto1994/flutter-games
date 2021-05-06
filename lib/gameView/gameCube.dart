@@ -15,10 +15,10 @@ class _GameCubeState extends State<GameCube> {
     super.initState();
     this.tetris = new Tetris(cb: () {
       this.setState(() {
-        print('强制更新');
+        // print('强制更新');
       });
     });
-    this.tetris.start();
+    // this.tetris.start();
     eventBus.on('tetris', (type) {
       switch (type) {
         case 'down':
@@ -49,7 +49,7 @@ class _GameCubeState extends State<GameCube> {
           break;
       }
       this.setState(() {
-        print('强制更新');
+        // print('强制更新');
       });
     });
   }
@@ -87,6 +87,13 @@ class _GameCubeState extends State<GameCube> {
     return Container(
       width: 152,
       height: 302,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.black,
+          width: 1,
+          style: BorderStyle.solid,
+        ),
+      ),
       child: new Container(
         child: this.createCubes(),
       ),

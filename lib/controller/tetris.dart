@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:flutter_tetris/controller/constants.dart';
 
-import './square.dart';
 import './audio.dart';
 
 class Tetris {

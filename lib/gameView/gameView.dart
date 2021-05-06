@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import './gameCube.dart';
+import './score.dart';
+
+const double GameViewWidth = 320;
 
 class GameView extends StatefulWidget {
   @override
@@ -21,7 +24,7 @@ class _GameViewState extends State<GameView> {
             child: Container(),
           ),
           Container(
-            width: 300,
+            width: GameViewWidth,
             // padding: const EdgeInsets.all(30),
             decoration: BoxDecoration(
               border: Border(
@@ -130,13 +133,21 @@ class _GameViewState extends State<GameView> {
                       child: new Row(
                         children: [
                           Container(
+                            color: Color.fromRGBO(158, 173, 134, 1),
                             padding: const EdgeInsets.all(5),
                             child: new GameCube(),
                           ),
                           new Expanded(
                             flex: 1,
                             child: Container(
-                              color: Colors.blue,
+                              padding: const EdgeInsets.only(
+                                left: 5,
+                                right: 10,
+                                top: 10,
+                                bottom: 10,
+                              ),
+                              child: new Score(),
+                              color: Color.fromRGBO(158, 173, 134, 1),
                             ),
                           )
                         ],
