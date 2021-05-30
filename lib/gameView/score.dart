@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../provider/game.dart';
 
 class Score extends StatefulWidget {
   @override
@@ -50,7 +52,9 @@ class _ScoreState extends State<Score> {
     return new Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        renderLine('最高分', 22),
+        Consumer<Game>(builder: (ctx, game, child) {
+          return renderLine('最高分', game.score);
+        }),
         renderLine('消除行', 4),
         renderLine('级别', 1),
         renderLine('下一个', 2),

@@ -15,12 +15,10 @@ class Tetris {
   int suqareIndex;
   bool isPause;
   bool isDropDown = false;
-  Function cb;
   Audio bgm;
-  Tetris({cb}) {
+  Tetris() {
     this.gameSquares = defaultGamePannel;
     this.isPause = false;
-    this.cb = cb;
     this.nextSquares = [
       [0, 0, 0, 0],
       [0, 0, 0, 0],
@@ -109,6 +107,8 @@ class Tetris {
       this.curPoint = nextCurPoint;
       this.copyCurPointToGameSquares();
       return true;
+    } else {
+      this.renderGameWhenSquareWasDown();
     }
 
     return false;
@@ -209,37 +209,55 @@ class Tetris {
     return this.gameSquares[0].contains(1);
   }
 
+  renderGameWhenSquareWasDown() {
+    if (this.checkGameIsOver()) {
+      this.bgm.playGameOverAudio();
+      // timer.cancel();
+      return;
+    }
+    this.fixCurSquareToGamePannel();
+    if (this.clearRow()) {
+      this.bgm.playClearAudio();
+    } else {
+      if (!this.isDropDown) {
+        this.bgm.playDropAudio();
+      }
+      this.isDropDown = false;
+    }
+    this.createCurSuqare();
+    this.copyCurPointToGameSquares();
+  }
+
   start() {
     this.copyCurPointToGameSquares();
-    this.timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
-      print('afterTimer=' + DateTime.now().toString());
-      if (!this.down(false)) {
-        if (this.checkGameIsOver()) {
-          this.bgm.playGameOverAudio();
-          timer.cancel();
-          return;
-        }
-        this.fixCurSquareToGamePannel();
-        if (this.clearRow()) {
-          this.bgm.playClearAudio();
-        } else {
-          if (!this.isDropDown) {
-            this.bgm.playDropAudio();
-          }
-          this.isDropDown = false;
-        }
-        this.createCurSuqare();
-        this.copyCurPointToGameSquares();
-        this.cb();
-      } else {
-        this.cb();
-      }
-      // if (count >= 5) {
-      //   //取消定时器，避免无限回调
-      //   timer.cancel();
-      //   timer = null;
-      // }
-    });
+    print('afterTimer=' + DateTime.now().toString());
+    if (!this.down(false)) {
+      this.renderGameWhenSquareWasDown();
+    } else {}
+    // this.timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
+    //   print('afterTimer=' + DateTime.now().toString());
+    //   if (!this.down(false)) {
+    //     if (this.checkGameIsOver()) {
+    //       this.bgm.playGameOverAudio();
+    //       timer.cancel();
+    //       return;
+    //     }
+    //     this.fixCurSquareToGamePannel();
+    //     if (this.clearRow()) {
+    //       this.bgm.playClearAudio();
+    //     } else {
+    //       if (!this.isDropDown) {
+    //         this.bgm.playDropAudio();
+    //       }
+    //       this.isDropDown = false;
+    //     }
+    //     this.createCurSuqare();
+    //     this.copyCurPointToGameSquares();
+    //     this.cb();
+    //   } else {
+    //     this.cb();
+    //   }
+    // });
   }
 
   sound() {

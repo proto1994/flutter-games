@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../controller/tetris.dart';
-import '../utils/eventBus.dart';
+import 'package:provider/provider.dart';
+import '../provider/game.dart';
 
 class GameCube extends StatefulWidget {
   @override
@@ -8,56 +8,15 @@ class GameCube extends StatefulWidget {
 }
 
 class _GameCubeState extends State<GameCube> {
-  Tetris tetris;
-
   @override
   void initState() {
     super.initState();
-    this.tetris = new Tetris(cb: () {
-      this.setState(() {
-        // print('强制更新');
-      });
-    });
-    // this.tetris.start();
-    eventBus.on('tetris', (type) {
-      switch (type) {
-        case 'down':
-          this.tetris.down(true);
-          break;
-        case 'left':
-          this.tetris.left();
-          break;
-        case 'right':
-          this.tetris.right();
-          break;
-        case 'rotate':
-          this.tetris.rotate();
-          break;
-        case 'drop':
-          this.tetris.drop();
-          break;
-        case 'pause':
-          this.tetris.pause();
-          break;
-        case 'sound':
-          this.tetris.sound();
-          break;
-        case 'replay':
-          this.tetris.replay();
-          break;
-        default:
-          break;
-      }
-      this.setState(() {
-        // print('强制更新');
-      });
-    });
   }
 
-  Widget createCubes() {
+  Widget createCubes(List<List<int>> gameSquares) {
     return new Column(
       children: [
-        for (var colunm in this.tetris.getGameSquares())
+        for (var colunm in gameSquares)
           new Row(
             children: [
               for (var row in colunm)
@@ -94,9 +53,9 @@ class _GameCubeState extends State<GameCube> {
           style: BorderStyle.solid,
         ),
       ),
-      child: new Container(
-        child: this.createCubes(),
-      ),
+      child: new Container(child: Consumer<Game>(builder: (ctx, game, child) {
+        return this.createCubes(game.gameSquares);
+      })),
     );
   }
 }
