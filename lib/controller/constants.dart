@@ -1,4 +1,4 @@
-var defaultSquare = [
+const defaultSquare = [
   [
     [
       [0, 2, 0, 0],

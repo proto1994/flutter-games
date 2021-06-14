@@ -5,6 +5,8 @@ import 'package:flutter_tetris/controller/constants.dart';
 
 import './audio.dart';
 
+const List<int> SCORE_MAP = [0, 100, 300, 600, 900];
+
 class Tetris {
   List<List<int>> gameSquares;
   List<List<int>> nextSquares;
@@ -14,18 +16,15 @@ class Tetris {
   int rotateIndex;
   int suqareIndex;
   bool isPause;
+  int score;
   bool isDropDown = false;
   Audio bgm;
   Tetris() {
-    this.gameSquares = defaultGamePannel;
+    this.gameSquares = this.getDefaultGameSquares();
     this.isPause = false;
-    this.nextSquares = [
-      [0, 0, 0, 0],
-      [0, 0, 0, 0],
-      [0, 0, 0, 0],
-      [0, 0, 0, 0],
-    ];
+    this.score = 0;
     this.bgm = new Audio();
+    this.createNextSuqare();
     this.createCurSuqare();
   }
 
@@ -151,10 +150,15 @@ class Tetris {
 
   createCurSuqare() {
     this.curPoint = new Point(0, 5);
+    this.curSquares = this.nextSquares;
+    this.createNextSuqare();
+  }
+
+  createNextSuqare() {
+    this.curPoint = new Point(0, 5);
     this.rotateIndex = Random().nextInt(3);
     this.suqareIndex = Random().nextInt(7);
-    this.curSquares = defaultSquare[this.suqareIndex][this.rotateIndex];
-    print('${this.rotateIndex} - ${this.suqareIndex}');
+    this.nextSquares = defaultSquare[this.suqareIndex][this.rotateIndex];
   }
 
   fixCurSquareToGamePannel() {
@@ -173,6 +177,7 @@ class Tetris {
   // 消行
   clearRow() {
     bool hasRowFullSuqare = false;
+    int needClearSquashRowCount = 0;
     for (int i = this.gameSquares.length - 1; i >= 0; i--) {
       bool isNeedClear = true;
       for (int j = 0; j < this.gameSquares[i].length; j++) {
@@ -183,6 +188,7 @@ class Tetris {
       }
       if (isNeedClear) {
         hasRowFullSuqare = true;
+        needClearSquashRowCount++;
         for (int n = i; n > 0; n--) {
           for (int m = 0; m < this.gameSquares[n].length; m++) {
             this.gameSquares[n][m] = this.gameSquares[n - 1][m];
@@ -191,8 +197,15 @@ class Tetris {
         i++;
       }
     }
-
+    print("$needClearSquashRowCount, needClearSquashRow");
+    this.calcScore(needClearSquashRowCount);
     return hasRowFullSuqare;
+  }
+
+  calcScore(needClearSquashRowCount) {
+    this.score += SCORE_MAP[needClearSquashRowCount];
+
+    print(this.score);
   }
 
   pause() {
@@ -264,10 +277,30 @@ class Tetris {
     this.bgm.toggleMute();
   }
 
+  List<List<int>> getDefaultGameSquares() {
+    List<List<int>> result = new List.generate(
+      defaultGamePannel.length,
+      (_) => new List(defaultGamePannel[0].length),
+    );
+    for (int i = 0; i < defaultGamePannel.length; i++) {
+      for (int j = 0; j < defaultGamePannel[i].length; j++) {
+        result[i][j] = defaultGamePannel[i][j];
+      }
+    }
+    return result;
+  }
+
   replay() {
-    print('print--');
-    this.timer?.cancel();
-    this.gameSquares = defaultGamePannel;
+    this.gameSquares = this.getDefaultGameSquares();
+    this.createNextSuqare();
+    this.createCurSuqare();
+    this.copyCurPointToGameSquares();
     this.isPause = false;
+    this.score = 0;
+    this.timer?.cancel();
+  }
+
+  getScore() {
+    return this.score;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/game.dart';
+import '../Widgets/shadowSquare.dart';
 
 class Score extends StatefulWidget {
   @override
@@ -53,11 +54,15 @@ class _ScoreState extends State<Score> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Consumer<Game>(builder: (ctx, game, child) {
+          print("${game.score}, scroe");
           return renderLine('最高分', game.score);
         }),
         renderLine('消除行', 4),
         renderLine('级别', 1),
         renderLine('下一个', 2),
+        Consumer<Game>(builder: (ctx, game, child) {
+          return ShadowSquare(squares: game.nextSquares);
+        }),
       ],
     );
   }

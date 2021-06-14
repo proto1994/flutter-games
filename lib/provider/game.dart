@@ -9,11 +9,14 @@ class Game with ChangeNotifier {
     this.tetris.start();
     // print(this.tetris.getGameSquares());
   }
-  int _score = 0;
-  int get score => _score;
+  int get score => this.tetris.getScore();
 
   List<List<int>> get gameSquares {
     return this.tetris.getGameSquares();
+  }
+
+  List<List<int>> get nextSquares {
+    return this.tetris.nextSquares;
   }
 
   down() {
@@ -48,6 +51,7 @@ class Game with ChangeNotifier {
 
   replay() {
     this.tetris.replay();
+
     notifyListeners();
   }
 
