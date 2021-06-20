@@ -15,6 +15,8 @@ class Tetris {
   Timer timer;
   int rotateIndex;
   int suqareIndex;
+  int rotateNextIndex;
+  int suqareNextIndex;
   bool isPause;
   int score;
   bool isDropDown = false;
@@ -150,15 +152,18 @@ class Tetris {
 
   createCurSuqare() {
     this.curPoint = new Point(0, 5);
+    this.rotateIndex = this.rotateNextIndex;
+    this.suqareIndex = this.suqareNextIndex;
     this.curSquares = this.nextSquares;
     this.createNextSuqare();
   }
 
   createNextSuqare() {
     this.curPoint = new Point(0, 5);
-    this.rotateIndex = Random().nextInt(3);
-    this.suqareIndex = Random().nextInt(7);
-    this.nextSquares = defaultSquare[this.suqareIndex][this.rotateIndex];
+    this.rotateNextIndex = Random().nextInt(3);
+    this.suqareNextIndex = Random().nextInt(7);
+    this.nextSquares =
+        defaultSquare[this.suqareNextIndex][this.rotateNextIndex];
   }
 
   fixCurSquareToGamePannel() {

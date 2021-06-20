@@ -83,7 +83,7 @@ class _GameControlState extends State<GameControl> {
                         width: 100,
                         height: 100,
                         color: Color(0xff5a65f1),
-                        text: '下降',
+                        text: '',
                       ),
                     ),
                   );
@@ -109,7 +109,7 @@ class _GameControlState extends State<GameControl> {
                             width: 55,
                             height: 55,
                             color: Color(0xff5a65f1),
-                            text: '旋转',
+                            text: '',
                           ),
                         );
                       })),
@@ -126,7 +126,7 @@ class _GameControlState extends State<GameControl> {
                           width: 55,
                           height: 55,
                           color: Color(0xff5a65f1),
-                          text: '左移',
+                          text: '',
                         ),
                       );
                     }),
@@ -176,7 +176,7 @@ class _GameControlState extends State<GameControl> {
                           width: 55,
                           height: 55,
                           color: Color(0xff5a65f1),
-                          text: '右移',
+                          text: '',
                         ),
                       );
                     })
@@ -193,7 +193,7 @@ class _GameControlState extends State<GameControl> {
                         width: 55,
                         height: 55,
                         color: Color(0xff5a65f1),
-                        text: '下移',
+                        text: '下降',
                       ),
                     );
                   }),
