@@ -45821,7 +45821,7 @@ s.a=s.uP()
 s.z=!1
 s.Q=0
 r=new R.HD()
-q=new N.uR(P.u(t.N,t.eP),"assets/")
+q=new N.uR(P.u(t.N,t.eP),"/flutter-games/assets/")
 r.a=q
 q.tO(H.b(["clean.mp3","drop.mp3","explosion.mp3","rotate.mp3","start.mp3","move.mp3"],t.i))
 s.cx=r
