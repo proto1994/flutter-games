@@ -1,18 +1,18 @@
-import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class Audio {
   AudioCache audioPlayer;
   bool mute = false;
   Audio() {
-    // this.audioPlayer = AudioCache(prefix: 'assets/');
-    // this.audioPlayer.loadAll([
-    //   'clean.mp3',
-    //   'drop.mp3',
-    //   'explosion.mp3',
-    //   'rotate.mp3',
-    //   'start.mp3',
-    //   'move.mp3',
-    // ]);
+    this.audioPlayer = AudioCache(prefix: 'assets/');
+    this.audioPlayer.loadAll([
+      'clean.mp3',
+      'drop.mp3',
+      'explosion.mp3',
+      'rotate.mp3',
+      'start.mp3',
+      'move.mp3',
+    ]);
   }
 
   // play() async {
