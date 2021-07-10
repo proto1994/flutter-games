@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../Widgets/buttonText.dart';
 import '../Widgets/triangle.dart';
@@ -10,197 +11,220 @@ class GameControl extends StatefulWidget {
 }
 
 class _GameControlState extends State<GameControl> {
-  Widget build(BuildContext context) {
+  Widget renderControl() {
     return Container(
-      margin: const EdgeInsets.only(left: 20, top: 10, right: 20),
+      margin: EdgeInsets.only(bottom: 20.w),
+      padding: EdgeInsets.only(left: 100.w, right: 100.w),
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          Consumer<Game>(builder: (ctx, game, child) {
+            return renderControlBtn(
+              text: '暂停',
+              onTap: () {
+                print('点击暂停');
+                game.pause();
+              },
+            );
+          }),
+          Consumer<Game>(builder: (ctx, game, child) {
+            return renderControlBtn(
+              text: '音效',
+              onTap: () {
+                print('点击音效');
+                game.toggleSound();
+              },
+            );
+          }),
+          Consumer<Game>(builder: (ctx, game, child) {
+            return renderControlBtn(
+              text: '重玩',
+              onTap: () {
+                print('点击重玩');
+                game.replay();
+              },
+            );
+          }),
+          Consumer<Game>(builder: (ctx, game, child) {
+            return renderControlBtn(
+              text: '开关',
+              onTap: () {
+                print('点击重玩');
+                game.replay();
+              },
+            );
+          }),
+        ],
+      ),
+    );
+  }
+
+  Widget renderControlBtn({text, onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: new ButtonText(
+        width: 60.w,
+        height: 60.w,
+        color: Colors.yellow[400],
+        text: text,
+        margin: EdgeInsets.only(right: 30.w),
+      ),
+    );
+  }
+
+  Widget renderDrop() {
+    return Consumer<Game>(
+      builder: (ctx, game, child) {
+        return GestureDetector(
+          onTap: () {
+            print('点击旋转');
+            game.drop();
+          },
+          child: Container(
+            child: new ButtonText(
+              width: 150.w,
+              height: 150.w,
+              color: Colors.yellow[400],
+              text: '',
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget renderTriangle() {
+    return new Container(
+      width: 60.w,
+      height: 60.w,
+      child: new Stack(
+        children: [
+          Positioned(
+            left: 30.w,
+            top: 0.w,
+            child: new Triangle(
+              direction: 'top',
+            ),
+          ),
+          Positioned(
+            left: 0.w,
+            top: 30.w,
+            child: new Triangle(
+              direction: 'left',
+            ),
+          ),
+          Positioned(
+            right: 0.w,
+            top: 30.w,
+            child: new Triangle(
+              direction: 'right',
+            ),
+          ),
+          Positioned(
+            left: 30.w,
+            bottom: 0.w,
+            child: new Triangle(
+              direction: 'bottom',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget renderDirection() {
+    return Container(
+      width: 240.w,
+      height: 240.w,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Positioned(
+            left: 80.w,
+            top: 4.w,
+            child: Consumer<Game>(builder: (ctx, game, child) {
+              return renderDirectionBtn(
+                onTap: () {
+                  print('点击旋转');
+                  game.rotate();
+                },
+              );
+            }),
+          ),
+          Positioned(
+            left: 4.w,
+            top: 80.w,
+            child: Consumer<Game>(
+              builder: (ctx, game, child) {
+                return renderDirectionBtn(
+                  onTap: () {
+                    print('点击左移');
+                    game.left();
+                  },
+                );
+              },
+            ),
+          ),
+          Positioned(
+            right: 4.w,
+            top: 80.w,
+            child: Consumer<Game>(
+              builder: (ctx, game, child) {
+                return renderDirectionBtn(
+                  onTap: () {
+                    print('点击右移');
+                    game.right();
+                  },
+                );
+              },
+            ),
+          ),
+          Positioned(
+            top: 154.w,
+            left: 80.w,
+            child: Consumer<Game>(builder: (ctx, game, child) {
+              return renderDirectionBtn(
+                onTap: () {
+                  game.down();
+                },
+              );
+            }),
+          ),
+          renderTriangle(),
+        ],
+      ),
+    );
+  }
+
+  Widget renderDirectionBtn({onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: new ButtonText(
+        width: 80.w,
+        height: 80.w,
+        color: Colors.yellow[400],
+        text: '',
+      ),
+    );
+  }
+
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(left: 60.w, top: 60.w, right: 60.w),
+      child: new Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          renderControl(),
           Container(
-            color: Colors.yellow,
-            child: new Column(
+            padding: EdgeInsets.only(left: 60.w, right: 60.w),
+            child: new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 20),
-                  child: new Row(
-                    children: [
-                      Consumer<Game>(builder: (ctx, game, child) {
-                        return GestureDetector(
-                          onTap: () {
-                            print('点击暂停');
-                            game.pause();
-                          },
-                          child: new ButtonText(
-                            width: 30,
-                            height: 30,
-                            color: Color.fromRGBO(45, 196, 33, 1),
-                            text: '暂停(P)',
-                            margin: const EdgeInsets.only(right: 15),
-                          ),
-                        );
-                      }),
-                      Consumer<Game>(builder: (ctx, game, child) {
-                        return GestureDetector(
-                          onTap: () {
-                            print('点击音效');
-                            game.toggleSound();
-                          },
-                          child: new ButtonText(
-                            width: 30,
-                            height: 30,
-                            color: Color.fromRGBO(45, 196, 33, 1),
-                            text: '音效(S)',
-                            margin: const EdgeInsets.only(right: 15),
-                          ),
-                        );
-                      }),
-                      Consumer<Game>(builder: (ctx, game, child) {
-                        return GestureDetector(
-                          onTap: () {
-                            print('点击重玩');
-                            game.replay();
-                          },
-                          child: new ButtonText(
-                            width: 30,
-                            height: 30,
-                            color: Color(0xffdd1a1a),
-                            text: '重玩(R)',
-                            margin: const EdgeInsets.only(right: 15),
-                          ),
-                        );
-                      }),
-                    ],
-                  ),
-                ),
-                Consumer<Game>(builder: (ctx, game, child) {
-                  return GestureDetector(
-                    onTap: () {
-                      print('点击旋转');
-                      game.drop();
-                    },
-                    child: Container(
-                      child: new ButtonText(
-                        width: 100,
-                        height: 100,
-                        color: Color(0xff5a65f1),
-                        text: '',
-                      ),
-                    ),
-                  );
-                }),
+                renderDirection(),
+                renderDrop(),
               ],
             ),
           ),
-          Container(
-            color: Colors.yellow,
-            child: new Column(
-              children: [
-                Container(
-                  transform: Matrix4.translationValues(0, 15, 0),
-                  child: Transform(
-                      transform: Matrix4.translationValues(0, 0, 0),
-                      child: Consumer<Game>(builder: (ctx, game, child) {
-                        return GestureDetector(
-                          onTap: () {
-                            print('点击旋转');
-                            game.rotate();
-                          },
-                          child: new ButtonText(
-                            width: 55,
-                            height: 55,
-                            color: Color(0xff5a65f1),
-                            text: '',
-                          ),
-                        );
-                      })),
-                ),
-                new Row(
-                  children: [
-                    Consumer<Game>(builder: (ctx, game, child) {
-                      return GestureDetector(
-                        onTap: () {
-                          print('点击左移');
-                          game.left();
-                        },
-                        child: new ButtonText(
-                          width: 55,
-                          height: 55,
-                          color: Color(0xff5a65f1),
-                          text: '',
-                        ),
-                      );
-                    }),
-                    new Container(
-                      width: 50,
-                      height: 60,
-                      child: new Stack(
-                        children: [
-                          Positioned(
-                            left: 25,
-                            top: 3,
-                            child: new Triangle(
-                              direction: 'top',
-                            ),
-                          ),
-                          Positioned(
-                            left: 5,
-                            top: 23,
-                            child: new Triangle(
-                              direction: 'left',
-                            ),
-                          ),
-                          Positioned(
-                            right: 5,
-                            top: 23,
-                            child: new Triangle(
-                              direction: 'right',
-                            ),
-                          ),
-                          Positioned(
-                            left: 25,
-                            bottom: 17,
-                            child: new Triangle(
-                              direction: 'bottom',
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Consumer<Game>(builder: (ctx, game, child) {
-                      return GestureDetector(
-                        onTap: () {
-                          print('点击右移');
-                          game.right();
-                        },
-                        child: new ButtonText(
-                          width: 55,
-                          height: 55,
-                          color: Color(0xff5a65f1),
-                          text: '',
-                        ),
-                      );
-                    })
-                  ],
-                ),
-                new Transform(
-                  transform: Matrix4.translationValues(0, -15, 0),
-                  child: Consumer<Game>(builder: (ctx, game, child) {
-                    return GestureDetector(
-                      onTap: () {
-                        game.down();
-                      },
-                      child: new ButtonText(
-                        width: 55,
-                        height: 55,
-                        color: Color(0xff5a65f1),
-                        text: '下降',
-                      ),
-                    );
-                  }),
-                )
-              ],
-            ),
-          )
         ],
       ),
     );

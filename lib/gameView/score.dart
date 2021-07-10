@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/game.dart';
 import '../Widgets/shadowSquare.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Score extends StatefulWidget {
   @override
@@ -50,20 +51,27 @@ class _ScoreState extends State<Score> {
   }
 
   Widget build(BuildContext context) {
-    return new Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Consumer<Game>(builder: (ctx, game, child) {
-          print("${game.score}, scroe");
-          return renderLine('最高分', game.score);
-        }),
-        renderLine('消除行', 4),
-        renderLine('级别', 1),
-        renderLine('下一个', 2),
-        Consumer<Game>(builder: (ctx, game, child) {
-          return ShadowSquare(squares: game.nextSquares);
-        }),
-      ],
+    return Container(
+      padding: EdgeInsets.only(
+        left: 6.w,
+        right: 6.w,
+        top: 10.w,
+      ),
+      child: new Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Consumer<Game>(builder: (ctx, game, child) {
+            print("${game.score}, scroe");
+            return renderLine('最高分', game.score);
+          }),
+          renderLine('消除行', 4),
+          renderLine('级别', 1),
+          renderLine('下一个', 2),
+          Consumer<Game>(builder: (ctx, game, child) {
+            return ShadowSquare(squares: game.nextSquares);
+          }),
+        ],
+      ),
     );
   }
 }

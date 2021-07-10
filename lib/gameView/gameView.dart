@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import './gameCube.dart';
 import './score.dart';
-
-const double GameViewWidth = 320;
 
 class GameView extends StatefulWidget {
   @override
@@ -10,160 +9,47 @@ class GameView extends StatefulWidget {
 }
 
 class _GameViewState extends State<GameView> {
+  Widget renderLeft() {
+    return new Expanded(
+      flex: 1,
+      child: Container(),
+    );
+  }
+
   Widget build(BuildContext context) {
     return Container(
-      height: 393,
-      margin: const EdgeInsets.only(bottom: 50),
+      margin: EdgeInsets.only(bottom: 50.w),
+      padding: EdgeInsets.only(top: 50.w),
       // decoration: BoxDecoration(color: Colors.red),
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          new Expanded(
-            flex: 1,
-            child: Container(),
-          ),
+          renderLeft(),
           Container(
-            width: GameViewWidth,
-            // padding: const EdgeInsets.all(30),
+            width: 560.w,
             decoration: BoxDecoration(
               border: Border(
-                left: BorderSide(width: 6, color: Colors.black),
-                right: BorderSide(width: 6, color: Colors.black),
-                bottom: BorderSide(width: 6, color: Colors.black),
+                left: BorderSide(width: 10.w, color: Colors.white),
+                right: BorderSide(width: 10.w, color: Colors.white),
+                bottom: BorderSide(width: 10.w, color: Colors.white),
+                top: BorderSide(width: 10.w, color: Colors.white),
               ),
             ),
-            child: new Column(
-              children: [
-                Container(
-                  child: new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: Expanded(
-                          child: new Row(
-                            children: [
-                              Container(
-                                height: 5,
-                                width: 40,
-                                color: Colors.black,
-                                margin: const EdgeInsets.only(right: 5),
-                              ),
-                              Container(
-                                height: 5,
-                                width: 10,
-                                color: Colors.black,
-                                margin: const EdgeInsets.only(right: 5),
-                              ),
-                              Container(
-                                height: 5,
-                                width: 10,
-                                color: Colors.black,
-                                margin: const EdgeInsets.only(right: 5),
-                              ),
-                              Container(
-                                height: 5,
-                                width: 10,
-                                color: Colors.black,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Container(
-                        transform: Matrix4.translationValues(0, 8, 0),
-                        child: new Text(
-                          '俄罗斯方块',
-                          style: TextStyle(
-                            fontSize: 20,
-                            textBaseline: null,
-                            color: Colors.black,
-                            height: 0,
-                            decoration: TextDecoration.none,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        child: Expanded(
-                          child: new Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container(
-                                height: 5,
-                                width: 10,
-                                color: Colors.black,
-                                margin: const EdgeInsets.only(right: 5),
-                              ),
-                              Container(
-                                height: 5,
-                                width: 10,
-                                color: Colors.black,
-                                margin: const EdgeInsets.only(right: 5),
-                              ),
-                              Container(
-                                height: 5,
-                                width: 10,
-                                color: Colors.black,
-                                margin: const EdgeInsets.only(right: 5),
-                              ),
-                              Container(
-                                height: 5,
-                                width: 40,
-                                color: Colors.black,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                new Expanded(
-                  child: Container(
-                    padding: EdgeInsets.all(25),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 10,
-                          style: BorderStyle.solid,
-                        ),
-                      ),
-                      child: new Row(
-                        children: [
-                          Container(
-                            color: Color.fromRGBO(158, 173, 134, 1),
-                            padding: const EdgeInsets.all(5),
-                            child: new GameCube(),
-                          ),
-                          new Expanded(
-                            flex: 1,
-                            child: Container(
-                              padding: const EdgeInsets.only(
-                                left: 5,
-                                right: 10,
-                                top: 10,
-                                bottom: 10,
-                              ),
-                              child: new Score(),
-                              color: Color.fromRGBO(158, 173, 134, 1),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          new Expanded(
-            flex: 1,
+            padding: EdgeInsets.all(70.w),
             child: Container(
-              color: Colors.yellow,
+              color: Color.fromRGBO(158, 173, 134, 1),
+              child: Row(
+                children: [
+                  GameCube(),
+                  Expanded(
+                    child: Score(),
+                  ),
+                ],
+              ),
             ),
           ),
+          renderLeft(),
         ],
       ),
     );

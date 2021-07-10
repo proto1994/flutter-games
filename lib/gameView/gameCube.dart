@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../provider/game.dart';
 import '../Widgets/shadowSquare.dart';
 
@@ -17,8 +18,6 @@ class _GameCubeState extends State<GameCube> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 152,
-      height: 302,
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.black,

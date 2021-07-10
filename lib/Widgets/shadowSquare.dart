@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class ShadowSquare extends StatelessWidget {
   final List<List<int>> squares;
   ShadowSquare({Key key, this.squares}) : super(key: key);
@@ -17,10 +19,10 @@ class ShadowSquare extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(2),
                     margin: const EdgeInsets.all(1),
-                    width: 13,
-                    height: 13,
+                    width: 23.w,
+                    height: 23.w,
                     decoration: BoxDecoration(
-                      border: Border.all(width: 1, color: Colors.black),
+                      border: Border.all(width: 1.w, color: Colors.black),
                     ),
                     child: Container(
                       color: Colors.black,

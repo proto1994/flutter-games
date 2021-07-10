@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import './gameView/gameView.dart';
 import './gameView/gameControl.dart';
@@ -39,18 +40,27 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(color: Colors.yellow),
-      padding: const EdgeInsets.only(top: 80),
-      child: Column(
-        children: [
-          new GameView(),
-          new Expanded(
-            child: Container(
-              child: new GameControl(),
-            ),
-          )
-        ],
+    ScreenUtil.init(
+      BoxConstraints(
+        maxWidth: MediaQuery.of(context).size.width,
+        maxHeight: MediaQuery.of(context).size.height,
+      ),
+      designSize: Size(750, 1500),
+      orientation: Orientation.portrait,
+    );
+    return SafeArea(
+      child: Container(
+        decoration: BoxDecoration(color: Colors.red[400]),
+        child: Column(
+          children: [
+            new GameView(),
+            new Expanded(
+              child: Container(
+                child: new GameControl(),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
