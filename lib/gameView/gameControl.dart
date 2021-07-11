@@ -78,14 +78,14 @@ class _GameControlState extends State<GameControl> {
         return GestureDetector(
           onTap: () {
             print('点击旋转');
-            game.drop();
+            game.rotate();
           },
           child: Container(
             child: new ButtonText(
               width: 150.w,
               height: 150.w,
               color: Colors.yellow[400],
-              text: '',
+              text: '旋转',
             ),
           ),
         );
@@ -145,8 +145,7 @@ class _GameControlState extends State<GameControl> {
             child: Consumer<Game>(builder: (ctx, game, child) {
               return renderDirectionBtn(
                 onTap: () {
-                  print('点击旋转');
-                  game.rotate();
+                  game.drop();
                 },
               );
             }),

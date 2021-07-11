@@ -58,17 +58,22 @@ class _ScoreState extends State<Score> {
         top: 10.w,
       ),
       child: new Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        // mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Consumer<Game>(builder: (ctx, game, child) {
             print("${game.score}, scroe");
             return renderLine('最高分', game.score);
           }),
-          renderLine('消除行', 4),
-          renderLine('级别', 1),
-          renderLine('下一个', 2),
+          // renderLine('消除行', 4),
+          // renderLine('级别', 1),
+          // renderLine('下一个', 2),
           Consumer<Game>(builder: (ctx, game, child) {
-            return ShadowSquare(squares: game.nextSquares);
+            return ShadowSquare(
+              squares: game.nextSquares,
+              opacity: 0,
+            );
           }),
         ],
       ),

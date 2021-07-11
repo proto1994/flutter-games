@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 import '../controller/tetris.dart';
 
 class Game with ChangeNotifier {
   Tetris tetris;
+  Timer timer;
+  bool isPause;
   Game() {
     print('初始化');
+    this.isPause = false;
     this.tetris = new Tetris();
-    this.tetris.start();
+    this.start();
     // print(this.tetris.getGameSquares());
   }
   int get score => this.tetris.getScore();
@@ -19,8 +23,18 @@ class Game with ChangeNotifier {
     return this.tetris.nextSquares;
   }
 
+  start() {
+    this.tetris.copyCurPointToGameSquares();
+    this.timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
+      if (!this.isPause) {
+        this.tetris.down();
+        notifyListeners();
+      }
+    });
+  }
+
   down() {
-    this.tetris.down(true);
+    this.tetris.down();
     notifyListeners();
   }
 
@@ -56,7 +70,18 @@ class Game with ChangeNotifier {
   }
 
   pause() {
-    this.tetris.pause();
+    print('pause');
+    if (!this.isPause) {
+      this.timer?.cancel();
+      this.isPause = true;
+    } else {
+      this.isPause = false;
+      this.start();
+    }
     notifyListeners();
+  }
+
+  isGameOver() {
+    return this.tetris.checkGameIsOver();
   }
 }

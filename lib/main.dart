@@ -54,11 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: [
             new GameView(),
-            new Expanded(
-              child: Container(
-                child: new GameControl(),
-              ),
-            )
+            new GameControl(),
           ],
         ),
       ),

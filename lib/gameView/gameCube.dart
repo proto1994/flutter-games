@@ -27,6 +27,14 @@ class _GameCubeState extends State<GameCube> {
       ),
       child: new Container(
         child: Consumer<Game>(builder: (ctx, game, child) {
+          if (game.isGameOver()) {
+            return Text(
+              'game Over',
+              style: TextStyle(
+                fontSize: 20.w,
+              ),
+            );
+          }
           return new ShadowSquare(
             squares: game?.gameSquares,
           );

@@ -17,13 +17,11 @@ class Tetris {
   int suqareIndex;
   int rotateNextIndex;
   int suqareNextIndex;
-  bool isPause;
   int score;
   bool isDropDown = false;
   Audio bgm;
   Tetris() {
     this.gameSquares = this.getDefaultGameSquares();
-    this.isPause = false;
     this.score = 0;
     this.bgm = new Audio();
     this.createNextSuqare();
@@ -98,10 +96,7 @@ class Tetris {
     }
   }
 
-  down([bool isAuto = false]) {
-    if (isAuto) {
-      this.bgm.playMoveAudio();
-    }
+  down() {
     Point nextCurPoint = this.curPoint + new Point(1, 0);
     if (this.canDoNextOperating(nextCurPoint, this.curSquares)) {
       this.clearPrevCurPoint();
@@ -213,16 +208,6 @@ class Tetris {
     print(this.score);
   }
 
-  pause() {
-    if (!this.isPause) {
-      this.timer?.cancel();
-      this.isPause = true;
-    } else {
-      this.isPause = false;
-      this.start();
-    }
-  }
-
   checkGameIsOver() {
     return this.gameSquares[0].contains(1);
   }
@@ -244,38 +229,6 @@ class Tetris {
     }
     this.createCurSuqare();
     this.copyCurPointToGameSquares();
-  }
-
-  start() {
-    this.copyCurPointToGameSquares();
-    print('afterTimer=' + DateTime.now().toString());
-    if (!this.down(false)) {
-      this.renderGameWhenSquareWasDown();
-    } else {}
-    // this.timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
-    //   print('afterTimer=' + DateTime.now().toString());
-    //   if (!this.down(false)) {
-    //     if (this.checkGameIsOver()) {
-    //       this.bgm.playGameOverAudio();
-    //       timer.cancel();
-    //       return;
-    //     }
-    //     this.fixCurSquareToGamePannel();
-    //     if (this.clearRow()) {
-    //       this.bgm.playClearAudio();
-    //     } else {
-    //       if (!this.isDropDown) {
-    //         this.bgm.playDropAudio();
-    //       }
-    //       this.isDropDown = false;
-    //     }
-    //     this.createCurSuqare();
-    //     this.copyCurPointToGameSquares();
-    //     this.cb();
-    //   } else {
-    //     this.cb();
-    //   }
-    // });
   }
 
   sound() {
@@ -300,7 +253,6 @@ class Tetris {
     this.createNextSuqare();
     this.createCurSuqare();
     this.copyCurPointToGameSquares();
-    this.isPause = false;
     this.score = 0;
     this.timer?.cancel();
   }

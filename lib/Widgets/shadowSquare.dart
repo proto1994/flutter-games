@@ -4,7 +4,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ShadowSquare extends StatelessWidget {
   final List<List<int>> squares;
-  ShadowSquare({Key key, this.squares}) : super(key: key);
+  final Color color;
+  final num width;
+  final num height;
+  final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry padding;
+  final double opacity;
+  ShadowSquare({
+    Key key,
+    this.squares,
+    this.color = Colors.black,
+    this.height = 18,
+    this.width = 18,
+    this.margin,
+    this.padding,
+    this.opacity = 0.1,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,17 +30,17 @@ class ShadowSquare extends StatelessWidget {
             children: [
               for (var row in colunm)
                 Opacity(
-                  opacity: row == 0 ? 0.2 : 1,
+                  opacity: row == 0 ? this.opacity : 1,
                   child: Container(
-                    padding: const EdgeInsets.all(2),
-                    margin: const EdgeInsets.all(1),
-                    width: 23.w,
-                    height: 23.w,
+                    padding: this.padding ?? EdgeInsets.all(2.w),
+                    margin: this.margin ?? EdgeInsets.all(1.w),
+                    width: this.width.w,
+                    height: this.height.w,
                     decoration: BoxDecoration(
-                      border: Border.all(width: 1.w, color: Colors.black),
+                      border: Border.all(width: 1.w, color: this.color),
                     ),
                     child: Container(
-                      color: Colors.black,
+                      color: this.color,
                     ),
                   ),
                 )
