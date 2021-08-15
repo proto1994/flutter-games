@@ -10,6 +10,7 @@ class ShadowSquare extends StatelessWidget {
   final EdgeInsetsGeometry margin;
   final EdgeInsetsGeometry padding;
   final double opacity;
+  final double activeOpacity;
   ShadowSquare({
     Key key,
     this.squares,
@@ -19,6 +20,7 @@ class ShadowSquare extends StatelessWidget {
     this.margin,
     this.padding,
     this.opacity = 0.1,
+    this.activeOpacity = 1,
   }) : super(key: key);
 
   @override
@@ -30,9 +32,9 @@ class ShadowSquare extends StatelessWidget {
             children: [
               for (var row in colunm)
                 Opacity(
-                  opacity: row == 0 ? this.opacity : 1,
+                  opacity: row == 0 ? this.opacity : this.activeOpacity,
                   child: Container(
-                    padding: this.padding ?? EdgeInsets.all(2.w),
+                    padding: this.padding ?? EdgeInsets.all(3.w),
                     margin: this.margin ?? EdgeInsets.all(1.w),
                     width: this.width.w,
                     height: this.height.w,

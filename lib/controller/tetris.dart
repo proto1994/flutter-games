@@ -254,10 +254,13 @@ class Tetris {
     this.createCurSuqare();
     this.copyCurPointToGameSquares();
     this.score = 0;
-    this.timer?.cancel();
   }
 
   getScore() {
     return this.score;
+  }
+
+  playStart() {
+    this.bgm.playStartAudio();
   }
 }

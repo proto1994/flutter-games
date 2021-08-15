@@ -4,12 +4,12 @@ import '../provider/game.dart';
 import '../Widgets/shadowSquare.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class Score extends StatefulWidget {
+class ScorePanel extends StatefulWidget {
   @override
   _ScoreState createState() => _ScoreState();
 }
 
-class _ScoreState extends State<Score> {
+class _ScoreState extends State<ScorePanel> {
   Widget renderLine(text, score) {
     return new Column(
       children: [

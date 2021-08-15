@@ -4,12 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../provider/game.dart';
 import '../Widgets/shadowSquare.dart';
 
-class GameCube extends StatefulWidget {
+import './openAnimation.dart';
+
+class GamePanel extends StatefulWidget {
   @override
   _GameCubeState createState() => _GameCubeState();
 }
 
-class _GameCubeState extends State<GameCube> {
+class _GameCubeState extends State<GamePanel> {
   @override
   void initState() {
     super.initState();
@@ -27,6 +29,10 @@ class _GameCubeState extends State<GameCube> {
       ),
       child: new Container(
         child: Consumer<Game>(builder: (ctx, game, child) {
+          if (game.loadingStatus) {
+            return OpenAnimation();
+          }
+
           if (game.isGameOver()) {
             return Text(
               'game Over',

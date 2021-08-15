@@ -6,14 +6,19 @@ class Game with ChangeNotifier {
   Tetris tetris;
   Timer timer;
   bool isPause;
+  bool _loadingStatus;
   Game() {
     print('初始化');
     this.isPause = false;
+    this._loadingStatus = true;
     this.tetris = new Tetris();
-    this.start();
+    this.tetris.playStart();
+    // this.start();
     // print(this.tetris.getGameSquares());
   }
   int get score => this.tetris.getScore();
+
+  bool get loadingStatus => this._loadingStatus;
 
   List<List<int>> get gameSquares {
     return this.tetris.getGameSquares();
@@ -25,7 +30,7 @@ class Game with ChangeNotifier {
 
   start() {
     this.tetris.copyCurPointToGameSquares();
-    this.timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
+    this.timer = Timer.periodic(const Duration(milliseconds: 1000), (timer) {
       if (!this.isPause) {
         this.tetris.down();
         notifyListeners();
@@ -59,26 +64,43 @@ class Game with ChangeNotifier {
   }
 
   toggleSound() {
-    this.tetris.sound();
+    if (!this._loadingStatus) {
+      this.tetris.sound();
+    } else {
+      this.gameStart();
+    }
     notifyListeners();
   }
 
   replay() {
+    this._loadingStatus = true;
+    this.timer.cancel();
+    this.tetris.playStart();
     this.tetris.replay();
-
     notifyListeners();
   }
 
   pause() {
-    print('pause');
-    if (!this.isPause) {
-      this.timer?.cancel();
-      this.isPause = true;
+    if (!this._loadingStatus) {
+      if (!this.isPause) {
+        this.timer?.cancel();
+        this.isPause = true;
+      } else {
+        this.isPause = false;
+        this.start();
+      }
     } else {
-      this.isPause = false;
+      this.gameStart();
+    }
+
+    notifyListeners();
+  }
+
+  gameStart() {
+    if (this._loadingStatus) {
       this.start();
     }
-    notifyListeners();
+    this._loadingStatus = false;
   }
 
   isGameOver() {

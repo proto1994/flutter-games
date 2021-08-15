@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
-import "dart:math";
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import './gameCube.dart';
-import './score.dart';
 import '../Widgets/shadowSquare.dart';
 import '../controller/constants.dart';
 
-class GameView extends StatefulWidget {
+import './handle.dart';
+
+import './gamePanel.dart';
+import './scorePanel.dart';
+
+class SquareGames extends StatefulWidget {
+  SquareGames({Key key, this.title}) : super(key: key);
+  final String title;
+
   @override
-  _GameViewState createState() => _GameViewState();
+  _SquareGamesState createState() => _SquareGamesState();
 }
 
-class _GameViewState extends State<GameView> {
-  Widget renderLeft(demoSquare) {
+class _SquareGamesState extends State<SquareGames> {
+  // 图案
+  Widget renderPattern(demoSquare) {
     return Container(
       height: 524.w,
       child: Column(
@@ -34,7 +40,7 @@ class _GameViewState extends State<GameView> {
     );
   }
 
-  Widget build(BuildContext context) {
+  Widget renderPanel() {
     return Container(
       margin: EdgeInsets.only(bottom: 30.w, top: 60.w),
       padding: EdgeInsets.symmetric(horizontal: 60.w),
@@ -43,7 +49,7 @@ class _GameViewState extends State<GameView> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          renderLeft(demoSquareLeft),
+          renderPattern(demoSquareLeft),
           Container(
             width: 480.w,
             height: 524.w,
@@ -60,16 +66,39 @@ class _GameViewState extends State<GameView> {
               color: Color.fromRGBO(158, 173, 134, 1),
               child: Row(
                 children: [
-                  GameCube(),
+                  GamePanel(),
                   Expanded(
-                    child: Score(),
+                    child: ScorePanel(),
                   ),
                 ],
               ),
             ),
           ),
-          renderLeft(demoSquareRight),
+          renderPattern(demoSquareRight),
         ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    ScreenUtil.init(
+      BoxConstraints(
+        maxWidth: MediaQuery.of(context).size.width,
+        maxHeight: MediaQuery.of(context).size.height,
+      ),
+      designSize: Size(750, 1500),
+      orientation: Orientation.portrait,
+    );
+    return SafeArea(
+      child: Container(
+        decoration: BoxDecoration(color: Colors.red[400]),
+        child: Column(
+          children: [
+            renderPanel(),
+            new GameHandle(),
+          ],
+        ),
       ),
     );
   }

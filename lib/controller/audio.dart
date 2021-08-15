@@ -55,6 +55,6 @@ class Audio {
 
   playClearAudio() {
     if (this.mute) return;
-    this.audioPlayer?.play('clean.mp3');
+    this.audioPlayer?.play('start.mp3');
   }
 }

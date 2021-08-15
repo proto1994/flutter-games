@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import './gameView/gameView.dart';
-import './gameView/gameControl.dart';
 
 import './provider/game.dart';
 
+import './games/index.dart';
+
 void main() {
-  runApp(MyApp());
+  runApp(App());
 }
 
-class MyApp extends StatelessWidget {
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -23,40 +21,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.yellow,
         ),
-        home: MyHomePage(title: '俄罗斯方块'),
-      ),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    ScreenUtil.init(
-      BoxConstraints(
-        maxWidth: MediaQuery.of(context).size.width,
-        maxHeight: MediaQuery.of(context).size.height,
-      ),
-      designSize: Size(750, 1500),
-      orientation: Orientation.portrait,
-    );
-    return SafeArea(
-      child: Container(
-        decoration: BoxDecoration(color: Colors.red[400]),
-        child: Column(
-          children: [
-            new GameView(),
-            new GameControl(),
-          ],
-        ),
+        home: SquareGames(title: '俄罗斯方块'),
       ),
     );
   }

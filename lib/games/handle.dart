@@ -5,12 +5,12 @@ import '../Widgets/buttonText.dart';
 import '../Widgets/triangle.dart';
 import '../provider/game.dart';
 
-class GameControl extends StatefulWidget {
+class GameHandle extends StatefulWidget {
   @override
   _GameControlState createState() => _GameControlState();
 }
 
-class _GameControlState extends State<GameControl> {
+class _GameControlState extends State<GameHandle> {
   Widget renderControl() {
     return Container(
       margin: EdgeInsets.only(bottom: 20.w),
