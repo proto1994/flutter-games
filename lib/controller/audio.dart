@@ -58,8 +58,12 @@ class Audio {
   }
 
   playStartAudio() async {
-    final playId = await loadSoundId('start.mp3');
-    _pool.play(playId);
+    if (_soundIds['start.mp3'] == null) {
+      final playId = await loadSoundId('start.mp3');
+      _pool.play(playId);
+    } else {
+      _play('start.mp3');
+    }
   }
 
   playGameOverAudio() {

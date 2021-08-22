@@ -4,6 +4,9 @@ H5访问链接
 
 https://proto1994.github.io/flutter-games
 
+打包web
+
+flutter build web 
 
 
 # 参考
