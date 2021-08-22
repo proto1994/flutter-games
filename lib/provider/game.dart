@@ -32,9 +32,10 @@ class Game with ChangeNotifier {
     this.tetris.copyCurPointToGameSquares();
     this.timer = Timer.periodic(const Duration(milliseconds: 1000), (timer) {
       if (!this.isPause) {
-        if (!this.tetris.down()) {
-          this.tetris.playStart();
+        this.tetris.down();
+        if (this.tetris.checkGameIsOver()) {
           timer.cancel();
+          this.tetris.playStart();
         }
         notifyListeners();
       }
