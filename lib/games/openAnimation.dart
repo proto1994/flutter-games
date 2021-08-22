@@ -46,7 +46,6 @@ class _OpenAnimationState extends State<OpenAnimation> {
     direction = 'r';
     circleCount = 0;
     timer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
-      print('first----');
       if (column == 14 && row == 4) {
         timer.cancel();
         stepSecondary();

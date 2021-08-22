@@ -47,10 +47,10 @@ class _GameControlState extends State<GameHandle> {
           }),
           Consumer<Game>(builder: (ctx, game, child) {
             return renderControlBtn(
-              text: '开关',
+              text: '开始',
               onTap: () {
                 print('点击重玩');
-                game.replay();
+                game.begin();
               },
             );
           }),

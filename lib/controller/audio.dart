@@ -1,26 +1,44 @@
-import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/services.dart';
+import 'package:soundpool/soundpool.dart';
+
+const _SOUNDS = [
+  'clean.mp3',
+  'drop.mp3',
+  'explosion.mp3',
+  'move.mp3',
+  'rotate.mp3',
+  'start.mp3'
+];
 
 class Audio {
-  AudioCache audioPlayer;
+  Soundpool _pool;
+  Map<String, int> _soundIds;
   bool mute = false;
+  var bytes;
   Audio() {
-    this.audioPlayer = AudioCache(prefix: 'assets/');
-    this.audioPlayer.loadAll([
-      'clean.mp3',
-      'drop.mp3',
-      'explosion.mp3',
-      'rotate.mp3',
-      'start.mp3',
-      'move.mp3',
-    ]);
+    _pool = Soundpool(streamType: StreamType.music, maxStreams: 4);
+    _soundIds = Map();
+    createSoundIds();
   }
 
-  // play() async {
-  //   int result = await audioPlayer.play('music.mp3', isLocal: true);
-  //   if (result == 1) {
-  //     // succes
-  //   }
-  // }
+  createSoundIds() async {
+    for (var value in _SOUNDS) {
+      _soundIds[value] = await loadSoundId(value);
+    }
+  }
+
+  loadSoundId(value) async {
+    final data = await rootBundle.load('assets/$value');
+    final playId = await _pool.load(data);
+    return playId;
+  }
+
+  void _play(String name) {
+    final soundId = _soundIds[name];
+    if (soundId != null && !mute) {
+      _pool.play(soundId);
+    }
+  }
 
   // 静音
   toggleMute() {
@@ -28,33 +46,27 @@ class Audio {
   }
 
   playMoveAudio() {
-    if (this.mute) return;
-    // await audioPlayer.seek(Duration(milliseconds: 3000));
-    this.audioPlayer?.play('move.mp3');
+    _play('move.mp3');
   }
 
   playDropAudio() {
-    if (this.mute) return;
-    this.audioPlayer?.play('drop.mp3');
+    _play('drop.mp3');
   }
 
   playRotateAudio() {
-    if (this.mute) return;
-    this.audioPlayer?.play('rotate.mp3');
+    _play('rotate.mp3');
   }
 
-  playStartAudio() {
-    if (this.mute) return;
-    this.audioPlayer?.play('start.mp3');
+  playStartAudio() async {
+    final playId = await loadSoundId('start.mp3');
+    _pool.play(playId);
   }
 
   playGameOverAudio() {
-    if (this.mute) return;
-    this.audioPlayer?.play('explosion.mp3');
+    _play('explosion.mp3');
   }
 
   playClearAudio() {
-    if (this.mute) return;
-    this.audioPlayer?.play('start.mp3');
+    _play('start.mp3');
   }
 }

@@ -34,12 +34,7 @@ class _GameCubeState extends State<GamePanel> {
           }
 
           if (game.isGameOver()) {
-            return Text(
-              'game Over',
-              style: TextStyle(
-                fontSize: 20.w,
-              ),
-            );
+            return OpenAnimation();
           }
           return new ShadowSquare(
             squares: game?.gameSquares,

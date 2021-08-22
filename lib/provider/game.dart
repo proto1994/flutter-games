@@ -32,7 +32,10 @@ class Game with ChangeNotifier {
     this.tetris.copyCurPointToGameSquares();
     this.timer = Timer.periodic(const Duration(milliseconds: 1000), (timer) {
       if (!this.isPause) {
-        this.tetris.down();
+        if (!this.tetris.down()) {
+          this.tetris.playStart();
+          timer.cancel();
+        }
         notifyListeners();
       }
     });
@@ -101,6 +104,13 @@ class Game with ChangeNotifier {
       this.start();
     }
     this._loadingStatus = false;
+  }
+
+  begin() {
+    this._loadingStatus = false;
+    this.tetris.replay();
+    this.start();
+    notifyListeners();
   }
 
   isGameOver() {

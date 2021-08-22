@@ -106,7 +106,6 @@ class Tetris {
     } else {
       this.renderGameWhenSquareWasDown();
     }
-
     return false;
   }
 
@@ -215,7 +214,6 @@ class Tetris {
   renderGameWhenSquareWasDown() {
     if (this.checkGameIsOver()) {
       this.bgm.playGameOverAudio();
-      // timer.cancel();
       return;
     }
     this.fixCurSquareToGamePannel();
