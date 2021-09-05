@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tetris/provider/tetris.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../provider/game.dart';
@@ -28,16 +29,13 @@ class _GameCubeState extends State<GamePanel> {
         ),
       ),
       child: new Container(
-        child: Consumer<Game>(builder: (ctx, game, child) {
-          if (game.loadingStatus) {
-            return OpenAnimation();
-          }
-
-          if (game.isGameOver()) {
+        child: Consumer2<GameProvider, TetrisProvider>(
+            builder: (ctx, game, tetris, child) {
+          if (game.curModuleName == 'loading') {
             return OpenAnimation();
           }
           return new ShadowSquare(
-            squares: game?.gameSquares,
+            squares: tetris?.gameSquares,
           );
         }),
       ),

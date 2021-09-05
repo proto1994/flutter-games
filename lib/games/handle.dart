@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../Widgets/buttonText.dart';
 import '../Widgets/triangle.dart';
-import '../provider/game.dart';
+import '../provider/tetris.dart';
 
 class GameHandle extends StatefulWidget {
   @override
@@ -18,7 +18,7 @@ class _GameControlState extends State<GameHandle> {
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Consumer<Game>(builder: (ctx, game, child) {
+          Consumer<TetrisProvider>(builder: (ctx, game, child) {
             return renderControlBtn(
               text: '暂停',
               onTap: () {
@@ -27,7 +27,7 @@ class _GameControlState extends State<GameHandle> {
               },
             );
           }),
-          Consumer<Game>(builder: (ctx, game, child) {
+          Consumer<TetrisProvider>(builder: (ctx, game, child) {
             return renderControlBtn(
               text: '音效',
               onTap: () {
@@ -36,7 +36,7 @@ class _GameControlState extends State<GameHandle> {
               },
             );
           }),
-          Consumer<Game>(builder: (ctx, game, child) {
+          Consumer<TetrisProvider>(builder: (ctx, game, child) {
             return renderControlBtn(
               text: '重玩',
               onTap: () {
@@ -45,7 +45,7 @@ class _GameControlState extends State<GameHandle> {
               },
             );
           }),
-          Consumer<Game>(builder: (ctx, game, child) {
+          Consumer<TetrisProvider>(builder: (ctx, game, child) {
             return renderControlBtn(
               text: '开始',
               onTap: () {
@@ -73,7 +73,7 @@ class _GameControlState extends State<GameHandle> {
   }
 
   Widget renderDrop() {
-    return Consumer<Game>(
+    return Consumer<TetrisProvider>(
       builder: (ctx, game, child) {
         return GestureDetector(
           onTap: () {
@@ -142,7 +142,7 @@ class _GameControlState extends State<GameHandle> {
           Positioned(
             left: 80.w,
             top: 4.w,
-            child: Consumer<Game>(builder: (ctx, game, child) {
+            child: Consumer<TetrisProvider>(builder: (ctx, game, child) {
               return renderDirectionBtn(
                 onTap: () {
                   game.drop();
@@ -153,7 +153,7 @@ class _GameControlState extends State<GameHandle> {
           Positioned(
             left: 4.w,
             top: 80.w,
-            child: Consumer<Game>(
+            child: Consumer<TetrisProvider>(
               builder: (ctx, game, child) {
                 return renderDirectionBtn(
                   onTap: () {
@@ -167,7 +167,7 @@ class _GameControlState extends State<GameHandle> {
           Positioned(
             right: 4.w,
             top: 80.w,
-            child: Consumer<Game>(
+            child: Consumer<TetrisProvider>(
               builder: (ctx, game, child) {
                 return renderDirectionBtn(
                   onTap: () {
@@ -181,7 +181,7 @@ class _GameControlState extends State<GameHandle> {
           Positioned(
             top: 154.w,
             left: 80.w,
-            child: Consumer<Game>(builder: (ctx, game, child) {
+            child: Consumer<TetrisProvider>(builder: (ctx, game, child) {
               return renderDirectionBtn(
                 onTap: () {
                   game.down();

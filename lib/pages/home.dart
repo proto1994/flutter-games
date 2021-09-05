@@ -3,10 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../Widgets/shadowSquare.dart';
 import '../controller/constants.dart';
 
-import './handle.dart';
+import '../games/handle.dart';
 
-import './gamePanel.dart';
-import './scorePanel.dart';
+import '../games/gamePanel.dart';
+import '../games/scorePanel.dart';
 
 class SquareGames extends StatefulWidget {
   SquareGames({Key key, this.title}) : super(key: key);
@@ -96,7 +96,7 @@ class _SquareGamesState extends State<SquareGames> {
         child: Column(
           children: [
             renderPanel(),
-            new GameHandle(),
+            GameHandle(),
           ],
         ),
       ),
