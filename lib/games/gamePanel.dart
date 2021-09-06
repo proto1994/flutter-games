@@ -5,6 +5,7 @@ import '../provider/game.dart';
 import '../Widgets/shadowSquare.dart';
 
 import './start/index.dart';
+import './selector.dart';
 
 class GamePanel extends StatefulWidget {
   @override
@@ -31,14 +32,17 @@ class _GameCubeState extends State<GamePanel> {
         child: Consumer2<GameProvider, TetrisProvider>(
           builder: (ctx, game, tetris, child) {
             if (game.isStart) {
-              return new ShadowSquare(
-                squares: tetris?.gameSquares,
-              );
+              switch (game.gameIndex) {
+                case 1:
+                  return new ShadowSquare(
+                    squares: tetris?.gameSquares,
+                  );
+              }
             }
             if (game.gameIndex == 0) {
               return Start();
             }
-            return null;
+            return new GameSelector();
           },
         ),
       ),
