@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tetris/provider/tetris.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../provider/game.dart';
 import '../Widgets/shadowSquare.dart';
 
-import './openAnimation.dart';
+import './start/index.dart';
 
 class GamePanel extends StatefulWidget {
   @override
@@ -30,14 +29,18 @@ class _GameCubeState extends State<GamePanel> {
       ),
       child: new Container(
         child: Consumer2<GameProvider, TetrisProvider>(
-            builder: (ctx, game, tetris, child) {
-          if (game.curModuleName == 'loading') {
-            return OpenAnimation();
-          }
-          return new ShadowSquare(
-            squares: tetris?.gameSquares,
-          );
-        }),
+          builder: (ctx, game, tetris, child) {
+            if (game.isStart) {
+              return new ShadowSquare(
+                squares: tetris?.gameSquares,
+              );
+            }
+            if (game.gameIndex == 0) {
+              return Start();
+            }
+            return null;
+          },
+        ),
       ),
     );
   }

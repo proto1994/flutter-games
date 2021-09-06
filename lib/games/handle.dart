@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../Widgets/buttonText.dart';
 import '../Widgets/triangle.dart';
 import '../provider/tetris.dart';
+import '../provider/game.dart';
 
 class GameHandle extends StatefulWidget {
   @override
@@ -73,12 +74,12 @@ class _GameControlState extends State<GameHandle> {
   }
 
   Widget renderDrop() {
-    return Consumer<TetrisProvider>(
+    return Consumer<GameProvider>(
       builder: (ctx, game, child) {
         return GestureDetector(
           onTap: () {
             print('点击旋转');
-            game.rotate();
+            game.changeGame();
           },
           child: Container(
             child: new ButtonText(

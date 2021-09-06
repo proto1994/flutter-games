@@ -3,12 +3,12 @@ import 'dart:async';
 import '../../constants/index.dart';
 import '../../components/shadowSquare.dart';
 
-class OpenAnimation extends StatefulWidget {
+class Start extends StatefulWidget {
   @override
-  _OpenAnimationState createState() => _OpenAnimationState();
+  _StartState createState() => _StartState();
 }
 
-class _OpenAnimationState extends State<OpenAnimation> {
+class _StartState extends State<Start> {
   List<List<int>> square = [];
   int circleCount = 0;
   int row = 0;
