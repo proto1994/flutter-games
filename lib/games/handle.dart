@@ -19,42 +19,54 @@ class _GameControlState extends State<GameHandle> {
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Consumer<TetrisProvider>(builder: (ctx, game, child) {
-            return renderControlBtn(
-              text: '暂停',
-              onTap: () {
-                print('点击暂停');
-                game.pause();
-              },
-            );
-          }),
-          Consumer<TetrisProvider>(builder: (ctx, game, child) {
-            return renderControlBtn(
-              text: '音效',
-              onTap: () {
-                print('点击音效');
-                game.toggleSound();
-              },
-            );
-          }),
-          Consumer<TetrisProvider>(builder: (ctx, game, child) {
-            return renderControlBtn(
-              text: '重玩',
-              onTap: () {
-                print('点击重玩');
-                game.replay();
-              },
-            );
-          }),
-          Consumer<TetrisProvider>(builder: (ctx, game, child) {
-            return renderControlBtn(
-              text: '开始',
-              onTap: () {
-                print('点击重玩');
-                game.begin();
-              },
-            );
-          }),
+          Consumer2<GameProvider, TetrisProvider>(
+            builder: (ctx, game, tetris, child) {
+              return renderControlBtn(
+                text: 'ON/OFF',
+                onTap: () {
+                  game.toggleSwitch();
+                },
+              );
+            },
+          ),
+          Consumer2<GameProvider, TetrisProvider>(
+            builder: (ctx, game, tetris, child) {
+              return renderControlBtn(
+                text: 'S/P',
+                onTap: () {
+                  print('点击暂停');
+                  if (game.isGameSeletor()) {
+                    game.startGame();
+                    tetris.start();
+                  } else {
+                    game.changeGame();
+                  }
+                },
+              );
+            },
+          ),
+          Consumer2<GameProvider, TetrisProvider>(
+            builder: (ctx, game, tetris, child) {
+              return renderControlBtn(
+                text: 'SOUND',
+                onTap: () {
+                  print('点击音效');
+                  game.changeGame();
+                },
+              );
+            },
+          ),
+          Consumer2<GameProvider, TetrisProvider>(
+            builder: (ctx, game, tetris, child) {
+              return renderControlBtn(
+                text: 'RESET',
+                onTap: () {
+                  print('点击重玩');
+                  game.changeGame();
+                },
+              );
+            },
+          ),
         ],
       ),
     );
@@ -74,12 +86,16 @@ class _GameControlState extends State<GameHandle> {
   }
 
   Widget renderDrop() {
-    return Consumer<GameProvider>(
-      builder: (ctx, game, child) {
+    return Consumer2<GameProvider, TetrisProvider>(
+      builder: (ctx, game, tetris, child) {
         return GestureDetector(
           onTap: () {
             print('点击旋转');
-            game.changeGame();
+            if (game.isGameSeletor()) {
+              tetris.rotate();
+            } else {
+              game.changeGame();
+            }
           },
           child: Container(
             child: new ButtonText(
@@ -143,13 +159,19 @@ class _GameControlState extends State<GameHandle> {
           Positioned(
             left: 80.w,
             top: 4.w,
-            child: Consumer<TetrisProvider>(builder: (ctx, game, child) {
-              return renderDirectionBtn(
-                onTap: () {
-                  game.drop();
-                },
-              );
-            }),
+            child: Consumer2<GameProvider, TetrisProvider>(
+              builder: (ctx, game, tetris, child) {
+                return renderDirectionBtn(
+                  onTap: () {
+                    if (game.isGameSeletor()) {
+                      tetris.drop();
+                    } else {
+                      game.changeLevel();
+                    }
+                  },
+                );
+              },
+            ),
           ),
           Positioned(
             left: 4.w,
@@ -182,10 +204,15 @@ class _GameControlState extends State<GameHandle> {
           Positioned(
             top: 154.w,
             left: 80.w,
-            child: Consumer<TetrisProvider>(builder: (ctx, game, child) {
+            child: Consumer2<GameProvider, TetrisProvider>(
+                builder: (ctx, game, tetris, child) {
               return renderDirectionBtn(
                 onTap: () {
-                  game.down();
+                  if (game.isGameSeletor()) {
+                    tetris.down();
+                  } else {
+                    game.changeLevel();
+                  }
                 },
               );
             }),

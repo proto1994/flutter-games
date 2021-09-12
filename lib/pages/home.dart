@@ -61,8 +61,9 @@ class _SquareGamesState extends State<SquareGames> {
                 top: BorderSide(width: 10.w, color: Colors.white),
               ),
             ),
-            padding: EdgeInsets.symmetric(horizontal: 60.w, vertical: 50.w),
+            padding: EdgeInsets.symmetric(horizontal: 49.w, vertical: 39.w),
             child: Container(
+              padding: EdgeInsets.all(10.w),
               color: Color.fromRGBO(158, 173, 134, 1),
               child: Row(
                 children: [

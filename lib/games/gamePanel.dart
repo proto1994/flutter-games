@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_tetris/provider/tetris.dart';
 import 'package:provider/provider.dart';
 import '../provider/game.dart';
@@ -21,11 +22,14 @@ class _GameCubeState extends State<GamePanel> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 206.w,
+      height: 406.w,
+      padding: EdgeInsets.all(1.w),
       decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.black,
-          width: 1,
-          style: BorderStyle.solid,
+        border: Border(
+          right: BorderSide(color: Colors.black, style: BorderStyle.solid),
+          top: BorderSide(color: Colors.black, style: BorderStyle.solid),
+          bottom: BorderSide(color: Colors.black, style: BorderStyle.solid),
         ),
       ),
       child: new Container(
@@ -37,7 +41,14 @@ class _GameCubeState extends State<GamePanel> {
                   return new ShadowSquare(
                     squares: tetris?.gameSquares,
                   );
+                default:
+                  return new ShadowSquare(
+                    squares: tetris?.gameSquares,
+                  );
               }
+            }
+            if (game.gameIndex == -1) {
+              return Container(child: null);
             }
             if (game.gameIndex == 0) {
               return Start();

@@ -6,20 +6,16 @@ class TetrisProvider with ChangeNotifier {
   Tetris tetris;
   Timer timer;
   bool isPause;
-  bool _loadingStatus;
   TetrisProvider() {
     print('初始化');
     this.isPause = false;
-    this._loadingStatus = true;
     this.tetris = new Tetris();
-    this.tetris.playStart();
+    // this.tetris.playStart();
     // this.start();
     // print(this.tetris.getGameSquares());
   }
 
   int get score => this.tetris.getScore();
-
-  bool get loadingStatus => this._loadingStatus;
 
   List<List<int>> get gameSquares {
     return this.tetris.getGameSquares();
@@ -36,7 +32,6 @@ class TetrisProvider with ChangeNotifier {
         this.tetris.down();
         if (this.tetris.checkGameIsOver()) {
           timer.cancel();
-          this.tetris.playStart();
         }
         notifyListeners();
       }
@@ -69,16 +64,11 @@ class TetrisProvider with ChangeNotifier {
   }
 
   toggleSound() {
-    if (!this._loadingStatus) {
-      this.tetris.sound();
-    } else {
-      this.gameStart();
-    }
+    this.tetris.sound();
     notifyListeners();
   }
 
   replay() {
-    this._loadingStatus = true;
     this.timer.cancel();
     this.tetris.playStart();
     this.tetris.replay();
@@ -86,32 +76,8 @@ class TetrisProvider with ChangeNotifier {
   }
 
   pause() {
-    if (!this._loadingStatus) {
-      if (!this.isPause) {
-        this.timer?.cancel();
-        this.isPause = true;
-      } else {
-        this.isPause = false;
-        this.start();
-      }
-    } else {
-      this.gameStart();
-    }
-
-    notifyListeners();
-  }
-
-  gameStart() {
-    if (this._loadingStatus) {
-      this.start();
-    }
-    this._loadingStatus = false;
-  }
-
-  begin() {
-    this._loadingStatus = false;
-    this.tetris.replay();
-    this.start();
+    this.timer?.cancel();
+    this.isPause = true;
     notifyListeners();
   }
 

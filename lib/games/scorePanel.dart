@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/tetris.dart';
 import '../Widgets/shadowSquare.dart';
+import '../provider/game.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ScorePanel extends StatefulWidget {
@@ -57,25 +58,32 @@ class _ScoreState extends State<ScorePanel> {
         right: 6.w,
         top: 10.w,
       ),
-      child: new Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        // mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Consumer<TetrisProvider>(builder: (ctx, game, child) {
-            print("${game.score}, scroe");
-            return renderLine('最高分', game.score);
-          }),
-          // renderLine('消除行', 4),
-          // renderLine('级别', 1),
-          // renderLine('下一个', 2),
-          Consumer<TetrisProvider>(builder: (ctx, game, child) {
-            return ShadowSquare(
-              squares: game.nextSquares,
-              opacity: 0,
-            );
-          }),
-        ],
+      child: Consumer2<GameProvider, TetrisProvider>(
+        builder: (ctx, game, tetris, child) {
+          if (game.gameIndex == -1) {
+            return Container(child: null);
+          }
+          return new Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            // mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Consumer<TetrisProvider>(builder: (ctx, game, child) {
+                print("${game.score}, scroe");
+                return renderLine('最高分', game.score);
+              }),
+              // renderLine('消除行', 4),
+              // renderLine('级别', 1),
+              // renderLine('下一个', 2),
+              Consumer<TetrisProvider>(builder: (ctx, game, child) {
+                return ShadowSquare(
+                  squares: game.nextSquares,
+                  opacity: 0,
+                );
+              }),
+            ],
+          );
+        },
       ),
     );
   }

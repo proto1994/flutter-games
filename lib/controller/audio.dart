@@ -14,6 +14,7 @@ class Audio {
   Soundpool _pool;
   Map<String, int> _soundIds;
   bool mute = false;
+  int streamId = 0;
   var bytes;
   Audio() {
     _pool = Soundpool(streamType: StreamType.music, maxStreams: 4);
@@ -33,10 +34,19 @@ class Audio {
     return playId;
   }
 
-  void _play(String name) {
+  void _play(String name) async {
     final soundId = _soundIds[name];
+    print('soundid $soundId');
     if (soundId != null && !mute) {
-      _pool.play(soundId);
+      this.streamId = await _pool.play(soundId);
+      print('${this.streamId} streamId');
+    }
+  }
+
+  void pause() {
+    if (this.streamId > 0) {
+      _pool.pause(this.streamId);
+      this.streamId = 0;
     }
   }
 
@@ -71,6 +81,6 @@ class Audio {
   }
 
   playClearAudio() {
-    _play('start.mp3');
+    _play('clean.mp3');
   }
 }
