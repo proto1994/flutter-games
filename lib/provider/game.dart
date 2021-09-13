@@ -157,6 +157,10 @@ class GameProvider with ChangeNotifier {
     return this.gameInstance.getNextSquares();
   }
 
+  num get score {
+    return this.gameInstance.getScore();
+  }
+
   isGameOff() {
     return this._gameIndex == -1;
   }

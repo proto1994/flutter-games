@@ -61,4 +61,8 @@ class Game extends BaseGame {
   List<List<int>> getNextSquares() {
     return this.gameInstance.getNextSquares();
   }
+
+  num getScore() {
+    return this.gameInstance.getScore();
+  }
 }

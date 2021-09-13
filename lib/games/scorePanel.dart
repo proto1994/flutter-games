@@ -59,7 +59,7 @@ class _ScoreState extends State<ScorePanel> {
       ),
       child: Consumer<GameProvider>(
         builder: (ctx, game, child) {
-          if (game.gameIndex == -1) {
+          if (!game.isStart) {
             return Container(child: null);
           }
           return new Column(
@@ -68,7 +68,7 @@ class _ScoreState extends State<ScorePanel> {
             // mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Consumer<GameProvider>(builder: (ctx, game, child) {
-                return renderLine('最高分', 2);
+                return renderLine('最高分', game.score);
               }),
               // renderLine('消除行', 4),
               // renderLine('级别', 1),

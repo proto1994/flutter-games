@@ -11,4 +11,5 @@ abstract class BaseGame {
   void sound();
   List<List<int>> getGameSquares();
   List<List<int>> getNextSquares();
+  num getScore();
 }
