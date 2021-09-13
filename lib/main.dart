@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import './provider/game.dart';
 import './provider/start.dart';
-import './provider/tetris.dart';
 
 import './pages/home.dart';
 
@@ -18,7 +17,6 @@ class App extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => GameProvider()),
         ChangeNotifierProvider(create: (_) => StartProvider()),
-        ChangeNotifierProvider(create: (_) => TetrisProvider()),
       ],
       child: MaterialApp(
         title: '俄罗斯方块',

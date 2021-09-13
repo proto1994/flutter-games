@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_tetris/provider/tetris.dart';
 import 'package:provider/provider.dart';
 import '../provider/game.dart';
 import '../Widgets/shadowSquare.dart';
@@ -33,17 +32,13 @@ class _GameCubeState extends State<GamePanel> {
         ),
       ),
       child: new Container(
-        child: Consumer2<GameProvider, TetrisProvider>(
-          builder: (ctx, game, tetris, child) {
+        child: Consumer<GameProvider>(
+          builder: (ctx, game, child) {
             if (game.isStart) {
               switch (game.gameIndex) {
                 case 1:
                   return new ShadowSquare(
-                    squares: tetris?.gameSquares,
-                  );
-                default:
-                  return new ShadowSquare(
-                    squares: tetris?.gameSquares,
+                    squares: game?.gameSquares,
                   );
               }
             }

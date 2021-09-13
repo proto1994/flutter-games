@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../provider/tetris.dart';
 import '../Widgets/shadowSquare.dart';
 import '../provider/game.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -58,8 +57,8 @@ class _ScoreState extends State<ScorePanel> {
         right: 6.w,
         top: 10.w,
       ),
-      child: Consumer2<GameProvider, TetrisProvider>(
-        builder: (ctx, game, tetris, child) {
+      child: Consumer<GameProvider>(
+        builder: (ctx, game, child) {
           if (game.gameIndex == -1) {
             return Container(child: null);
           }
@@ -68,14 +67,13 @@ class _ScoreState extends State<ScorePanel> {
             crossAxisAlignment: CrossAxisAlignment.start,
             // mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Consumer<TetrisProvider>(builder: (ctx, game, child) {
-                print("${game.score}, scroe");
-                return renderLine('最高分', game.score);
+              Consumer<GameProvider>(builder: (ctx, game, child) {
+                return renderLine('最高分', 2);
               }),
               // renderLine('消除行', 4),
               // renderLine('级别', 1),
               // renderLine('下一个', 2),
-              Consumer<TetrisProvider>(builder: (ctx, game, child) {
+              Consumer<GameProvider>(builder: (ctx, game, child) {
                 return ShadowSquare(
                   squares: game.nextSquares,
                   opacity: 0,

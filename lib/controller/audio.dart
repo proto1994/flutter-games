@@ -16,10 +16,23 @@ class Audio {
   bool mute = false;
   int streamId = 0;
   var bytes;
-  Audio() {
+
+  static Audio get instance => _getInstance();
+  static Audio _instance;
+  factory Audio() => _getInstance();
+
+  Audio._internal() {
+    // 初始化
     _pool = Soundpool(streamType: StreamType.music, maxStreams: 4);
     _soundIds = Map();
     createSoundIds();
+  }
+
+  static Audio _getInstance() {
+    if (_instance == null) {
+      _instance = new Audio._internal();
+    }
+    return _instance;
   }
 
   createSoundIds() async {

@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../Widgets/buttonText.dart';
 import '../Widgets/triangle.dart';
-import '../provider/tetris.dart';
 import '../provider/game.dart';
 
 class GameHandle extends StatefulWidget {
@@ -19,18 +18,18 @@ class _GameControlState extends State<GameHandle> {
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Consumer2<GameProvider, TetrisProvider>(
-            builder: (ctx, game, tetris, child) {
+          Consumer<GameProvider>(
+            builder: (ctx, game, child) {
               return renderControlBtn(
                 text: 'ON/OFF',
                 onTap: () {
-                  game.onSwitch();
+                  game.onOff();
                 },
               );
             },
           ),
-          Consumer2<GameProvider, TetrisProvider>(
-            builder: (ctx, game, tetris, child) {
+          Consumer<GameProvider>(
+            builder: (ctx, game, child) {
               return renderControlBtn(
                 text: 'S/P',
                 onTap: () {
@@ -40,8 +39,8 @@ class _GameControlState extends State<GameHandle> {
               );
             },
           ),
-          Consumer2<GameProvider, TetrisProvider>(
-            builder: (ctx, game, tetris, child) {
+          Consumer<GameProvider>(
+            builder: (ctx, game, child) {
               return renderControlBtn(
                 text: 'SOUND',
                 onTap: () {
@@ -51,8 +50,8 @@ class _GameControlState extends State<GameHandle> {
               );
             },
           ),
-          Consumer2<GameProvider, TetrisProvider>(
-            builder: (ctx, game, tetris, child) {
+          Consumer<GameProvider>(
+            builder: (ctx, game, child) {
               return renderControlBtn(
                 text: 'RESET',
                 onTap: () {
@@ -81,8 +80,8 @@ class _GameControlState extends State<GameHandle> {
   }
 
   Widget renderDrop() {
-    return Consumer2<GameProvider, TetrisProvider>(
-      builder: (ctx, game, tetris, child) {
+    return Consumer<GameProvider>(
+      builder: (ctx, game, child) {
         return GestureDetector(
           onTap: () {
             print('点击旋转');
@@ -150,8 +149,8 @@ class _GameControlState extends State<GameHandle> {
           Positioned(
             left: 80.w,
             top: 4.w,
-            child: Consumer2<GameProvider, TetrisProvider>(
-              builder: (ctx, game, tetris, child) {
+            child: Consumer<GameProvider>(
+              builder: (ctx, game, child) {
                 return renderDirectionBtn(
                   onTap: () {
                     game.onUp();

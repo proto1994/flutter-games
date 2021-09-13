@@ -5,9 +5,11 @@ import 'package:flutter_tetris/controller/constants.dart';
 
 import './audio.dart';
 
+import './baseGame.dart';
+
 const List<int> SCORE_MAP = [0, 100, 300, 600, 900];
 
-class Tetris {
+class Tetris extends BaseGame {
   List<List<int>> gameSquares;
   List<List<int>> nextSquares;
   List<List<int>> curSquares;
@@ -20,6 +22,7 @@ class Tetris {
   int score;
   bool isDropDown = false;
   Audio bgm;
+  bool isPause = false;
   Tetris() {
     this.gameSquares = this.getDefaultGameSquares();
     this.score = 0;
@@ -73,8 +76,12 @@ class Tetris {
     }
   }
 
-  getGameSquares() {
+  List<List<int>> getGameSquares() {
     return this.gameSquares;
+  }
+
+  List<List<int>> getNextSquares() {
+    return this.nextSquares;
   }
 
   checkCanRotate() {
@@ -97,6 +104,11 @@ class Tetris {
   }
 
   down() {
+    this.bgm.playMoveAudio();
+    this._down();
+  }
+
+  bool _down() {
     Point nextCurPoint = this.curPoint + new Point(1, 0);
     if (this.canDoNextOperating(nextCurPoint, this.curSquares)) {
       this.clearPrevCurPoint();
@@ -109,10 +121,10 @@ class Tetris {
     return false;
   }
 
-  drop() {
+  up() {
     this.isDropDown = true;
     while (true) {
-      if (!this.down()) {
+      if (!this._down()) {
         this.bgm.playDropAudio();
         break;
       }
@@ -142,6 +154,10 @@ class Tetris {
       this.curPoint = nextCurPoint;
       this.copyCurPointToGameSquares();
     }
+  }
+
+  pause() {
+    this.isPause = !this.isPause;
   }
 
   createCurSuqare() {
@@ -203,8 +219,6 @@ class Tetris {
 
   calcScore(needClearSquashRowCount) {
     this.score += SCORE_MAP[needClearSquashRowCount];
-
-    print(this.score);
   }
 
   checkGameIsOver() {
@@ -233,6 +247,19 @@ class Tetris {
     this.bgm.toggleMute();
   }
 
+  reset() {
+    this.timer?.cancel();
+    this.gameSquares = this.getDefaultGameSquares();
+    this.createNextSuqare();
+    this.createCurSuqare();
+    this.copyCurPointToGameSquares();
+    this.score = 0;
+  }
+
+  onOff() {
+    this.reset();
+  }
+
   List<List<int>> getDefaultGameSquares() {
     List<List<int>> result = new List.generate(
       defaultGamePannel.length,
@@ -246,19 +273,20 @@ class Tetris {
     return result;
   }
 
-  replay() {
-    this.gameSquares = this.getDefaultGameSquares();
-    this.createNextSuqare();
-    this.createCurSuqare();
-    this.copyCurPointToGameSquares();
-    this.score = 0;
-  }
-
   getScore() {
     return this.score;
   }
 
-  playStart() {
-    this.bgm.playStartAudio();
+  start(cb) {
+    this.copyCurPointToGameSquares();
+    this.timer = Timer.periodic(const Duration(milliseconds: 1000), (timer) {
+      if (!this.isPause) {
+        this._down();
+        if (this.checkGameIsOver()) {
+          timer.cancel();
+        }
+      }
+      cb();
+    });
   }
 }
