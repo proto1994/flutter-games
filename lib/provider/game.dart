@@ -35,19 +35,82 @@ class GameProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  changeLevel() {
-    if (this.isGameStart()) {
-      this.changeGame();
-    } else {
-      if (this._gameLevel >= 2) return;
-      this._gameLevel++;
-      notifyListeners();
-    }
+  changeLevel(num index) {
+    if (this._gameLevel >= 2) return;
+    this._gameLevel += index;
+    notifyListeners();
   }
 
   startGame() {
     this._isStart = true;
     notifyListeners();
+  }
+
+  onSwitch() {
+    this.toggleSwitch();
+  }
+
+  onPause() {
+    if (this.isGameStart()) {
+      this.changeGame();
+    }
+  }
+
+  onSound() {
+    if (this.isGameStart()) {
+      this.changeGame();
+    }
+  }
+
+  onReset() {
+    if (this.isGameStart()) {
+      this.changeGame();
+    }
+  }
+
+  onLeft() {
+    if (this.isGameStart()) {
+      this.changeGame();
+    }
+  }
+
+  onRight() {
+    if (this.isGameStart()) {
+      this.changeGame();
+    }
+  }
+
+  onDown() {
+    if (this.isGameStart()) {
+      this.changeGame();
+      return;
+    }
+    if (this.isGameSeletor()) {
+      this.changeLevel(-1);
+      return;
+    }
+  }
+
+  onUp() {
+    if (this.isGameStart()) {
+      this.changeGame();
+      return;
+    }
+    if (this.isGameSeletor()) {
+      this.changeLevel(1);
+      return;
+    }
+  }
+
+  onRotate() {
+    if (this.isGameStart()) {
+      this.changeGame();
+    }
+
+    if (this.isGameSeletor()) {
+      this.changeGame();
+      return;
+    }
   }
 
   isGameOff() {

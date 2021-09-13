@@ -24,7 +24,7 @@ class _GameControlState extends State<GameHandle> {
               return renderControlBtn(
                 text: 'ON/OFF',
                 onTap: () {
-                  game.toggleSwitch();
+                  game.onSwitch();
                 },
               );
             },
@@ -35,12 +35,7 @@ class _GameControlState extends State<GameHandle> {
                 text: 'S/P',
                 onTap: () {
                   print('点击暂停');
-                  if (game.isGameSeletor()) {
-                    game.startGame();
-                    tetris.start();
-                  } else {
-                    game.changeGame();
-                  }
+                  game.onPause();
                 },
               );
             },
@@ -51,7 +46,7 @@ class _GameControlState extends State<GameHandle> {
                 text: 'SOUND',
                 onTap: () {
                   print('点击音效');
-                  game.changeGame();
+                  game.onSound();
                 },
               );
             },
@@ -62,7 +57,7 @@ class _GameControlState extends State<GameHandle> {
                 text: 'RESET',
                 onTap: () {
                   print('点击重玩');
-                  game.changeGame();
+                  game.onReset();
                 },
               );
             },
@@ -91,11 +86,7 @@ class _GameControlState extends State<GameHandle> {
         return GestureDetector(
           onTap: () {
             print('点击旋转');
-            if (game.isGameSeletor()) {
-              tetris.rotate();
-            } else {
-              game.changeGame();
-            }
+            game.onRotate();
           },
           child: Container(
             child: new ButtonText(
@@ -163,11 +154,7 @@ class _GameControlState extends State<GameHandle> {
               builder: (ctx, game, tetris, child) {
                 return renderDirectionBtn(
                   onTap: () {
-                    if (game.isGameSeletor()) {
-                      tetris.drop();
-                    } else {
-                      game.changeLevel();
-                    }
+                    game.onUp();
                   },
                 );
               },
@@ -176,12 +163,12 @@ class _GameControlState extends State<GameHandle> {
           Positioned(
             left: 4.w,
             top: 80.w,
-            child: Consumer<TetrisProvider>(
+            child: Consumer<GameProvider>(
               builder: (ctx, game, child) {
                 return renderDirectionBtn(
                   onTap: () {
                     print('点击左移');
-                    game.left();
+                    game.onLeft();
                   },
                 );
               },
@@ -190,12 +177,12 @@ class _GameControlState extends State<GameHandle> {
           Positioned(
             right: 4.w,
             top: 80.w,
-            child: Consumer<TetrisProvider>(
+            child: Consumer<GameProvider>(
               builder: (ctx, game, child) {
                 return renderDirectionBtn(
                   onTap: () {
                     print('点击右移');
-                    game.right();
+                    game.onRight();
                   },
                 );
               },
@@ -204,18 +191,15 @@ class _GameControlState extends State<GameHandle> {
           Positioned(
             top: 154.w,
             left: 80.w,
-            child: Consumer2<GameProvider, TetrisProvider>(
-                builder: (ctx, game, tetris, child) {
-              return renderDirectionBtn(
-                onTap: () {
-                  if (game.isGameSeletor()) {
-                    tetris.down();
-                  } else {
-                    game.changeLevel();
-                  }
-                },
-              );
-            }),
+            child: Consumer<GameProvider>(
+              builder: (ctx, game, child) {
+                return renderDirectionBtn(
+                  onTap: () {
+                    game.onDown();
+                  },
+                );
+              },
+            ),
           ),
           renderTriangle(),
         ],
