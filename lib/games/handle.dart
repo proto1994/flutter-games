@@ -92,7 +92,7 @@ class _GameControlState extends State<GameHandle> {
               width: 150.w,
               height: 150.w,
               color: Colors.yellow[400],
-              text: '旋转',
+              text: 'ROTATE',
             ),
           ),
         );

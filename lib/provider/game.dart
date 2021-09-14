@@ -40,6 +40,7 @@ class GameProvider with ChangeNotifier {
 
   startGame() {
     this._isStart = true;
+    this._isGameOver = false;
     print('${this._gameIndex} gameindex');
     this.gameInstance.start((EGameStatus gameStatus) {
       this.handleGameOver(gameStatus);
@@ -53,6 +54,8 @@ class GameProvider with ChangeNotifier {
       this._isStart = false;
     } else if (gameStatus == EGameStatus.IsGameOver) {
       this._isGameOver = true;
+    } else if (gameStatus == EGameStatus.IsGameAning) {
+      this._isGameOver = false;
     }
   }
 

@@ -58,6 +58,7 @@ flutter:
     - assets/move.mp3
     - assets/rotate.mp3
     - assets/start.mp3
+    - assets/footer2.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

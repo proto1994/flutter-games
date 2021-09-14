@@ -81,6 +81,37 @@ class _SquareGamesState extends State<SquareGames> {
     );
   }
 
+  Widget renderTitle() {
+    return Positioned(
+      left: 275.w,
+      top: 40.w,
+      child: Container(
+        color: Colors.red[400],
+        width: 200.w,
+        height: 50.w,
+        child: Align(
+          child: Text(
+            'SUPER',
+            style: TextStyle(
+              fontSize: 40.w,
+              color: Colors.white,
+              decoration: TextDecoration.none,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget renderFooter() {
+    return Container(
+      child: Image(
+        image: AssetImage('assets/footer2.png'),
+        width: 650.w,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(
@@ -94,10 +125,16 @@ class _SquareGamesState extends State<SquareGames> {
     return SafeArea(
       child: Container(
         decoration: BoxDecoration(color: Colors.red[400]),
-        child: Column(
+        child: Stack(
           children: [
-            renderPanel(),
-            GameHandle(),
+            Column(
+              children: [
+                renderPanel(),
+                GameHandle(),
+                renderFooter(),
+              ],
+            ),
+            this.renderTitle(),
           ],
         ),
       ),
