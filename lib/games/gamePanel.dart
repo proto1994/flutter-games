@@ -42,6 +42,7 @@ class _GameCubeState extends State<GamePanel> {
                   );
               }
             }
+
             if (game.gameIndex == -1) {
               return Container(child: null);
             }

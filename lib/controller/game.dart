@@ -1,5 +1,6 @@
 import './baseGame.dart';
 import './tetris.dart';
+import '../constants/typedef.dart';
 
 class Game extends BaseGame {
   BaseGame gameInstance;
@@ -14,7 +15,7 @@ class Game extends BaseGame {
     }
   }
 
-  start(Function cb) {
+  start(StartCb cb) {
     this.gameInstance.start(cb);
   }
 

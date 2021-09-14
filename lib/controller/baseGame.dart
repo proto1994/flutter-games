@@ -1,7 +1,9 @@
+import '../constants/typedef.dart';
+
 abstract class BaseGame {
   void onOff();
   void reset();
-  void start(Function cb);
+  void start(StartCb cb);
   void rotate();
   void left();
   void right();

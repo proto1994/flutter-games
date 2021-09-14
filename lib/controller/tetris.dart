@@ -7,6 +7,9 @@ import './audio.dart';
 
 import './baseGame.dart';
 
+import '../constants/enum.dart';
+import '../constants/typedef.dart';
+
 const List<int> SCORE_MAP = [0, 100, 300, 600, 900];
 
 class Tetris extends BaseGame {
@@ -227,6 +230,7 @@ class Tetris extends BaseGame {
 
   renderGameWhenSquareWasDown() {
     if (this.checkGameIsOver()) {
+      print('game over--');
       this.bgm.playGameOverAudio();
       return;
     }
@@ -277,16 +281,46 @@ class Tetris extends BaseGame {
     return this.score;
   }
 
-  start(cb) {
+  start(StartCb cb) {
     this.copyCurPointToGameSquares();
     this.timer = Timer.periodic(const Duration(milliseconds: 1000), (timer) {
       if (!this.isPause) {
         this._down();
-        if (this.checkGameIsOver()) {
+        bool isGameOver = this.checkGameIsOver();
+        if (isGameOver) {
+          cb(EGameStatus.IsGameOver);
+          this.bgm.playGameOverAudio();
           timer.cancel();
+          this.handleGameOver(cb);
+          return;
+        }
+        cb(EGameStatus.IsInGame);
+      }
+    });
+  }
+
+  handleGameOver(StartCb cb) {
+    num fillRowIndex = 19;
+    bool isFill = true;
+    Timer.periodic(const Duration(milliseconds: 50), (timer) {
+      for (int j = 0; j < 10; j++) {
+        if (isFill) {
+          this.gameSquares[fillRowIndex][j] = 1;
+        } else {
+          this.gameSquares[fillRowIndex][j] = 0;
         }
       }
-      cb();
+      fillRowIndex -= isFill ? 1 : -1;
+      if (fillRowIndex == -1) {
+        isFill = false;
+        fillRowIndex = 0;
+      }
+      if (fillRowIndex >= 20) {
+        cb(EGameStatus.IsGameAniOver);
+        timer.cancel();
+        return;
+      }
+      cb(EGameStatus.IsGameAning);
     });
   }
 }

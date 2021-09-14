@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import '../controller/audio.dart';
 import '../controller/game.dart';
+import '../constants/enum.dart';
 
 class GameProvider with ChangeNotifier {
   int _gameIndex;
   int _gameLevel;
   bool _isStart;
+  bool _isGameOver;
   Audio bgm;
   Game gameInstance;
   GameProvider() {
     this._gameIndex = -1;
     this._gameLevel = 1;
     this._isStart = false;
+    this._isGameOver = false;
     this.bgm = new Audio();
     this.gameInstance = new Game(1);
   }
@@ -19,6 +22,7 @@ class GameProvider with ChangeNotifier {
   int get gameIndex => this._gameIndex;
   int get gameLevel => this._gameLevel;
   bool get isStart => this._isStart;
+  bool get isGameOver => this._isGameOver;
 
   changeGame() {
     this.bgm.pause();
@@ -37,10 +41,19 @@ class GameProvider with ChangeNotifier {
   startGame() {
     this._isStart = true;
     print('${this._gameIndex} gameindex');
-    this.gameInstance.start(() {
+    this.gameInstance.start((EGameStatus gameStatus) {
+      this.handleGameOver(gameStatus);
       notifyListeners();
     });
     notifyListeners();
+  }
+
+  handleGameOver(EGameStatus gameStatus) {
+    if (gameStatus == EGameStatus.IsGameAniOver) {
+      this._isStart = false;
+    } else if (gameStatus == EGameStatus.IsGameOver) {
+      this._isGameOver = true;
+    }
   }
 
   // 开关
@@ -109,6 +122,9 @@ class GameProvider with ChangeNotifier {
   }
 
   onDown() {
+    if (this._isGameOver) {
+      return;
+    }
     if (this.isGameStart()) {
       this.changeGame();
       return;
@@ -123,6 +139,9 @@ class GameProvider with ChangeNotifier {
   }
 
   onUp() {
+    if (this._isGameOver) {
+      return;
+    }
     if (this.isGameStart()) {
       this.changeGame();
       return;
