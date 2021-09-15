@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../Widgets/shadowSquare.dart';
+import '../components/shadowSquare.dart';
+import '../components/heartbeat.dart';
 import '../provider/game.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -59,26 +60,104 @@ class _ScoreState extends State<ScorePanel> {
       ),
       child: Consumer<GameProvider>(
         builder: (ctx, game, child) {
-          if (!game.isStart) {
-            return Container(child: null);
-          }
+          // if (game.isGameOff()) {
+          //   return Container(child: null);
+          // }
           return new Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             // mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Consumer<GameProvider>(builder: (ctx, game, child) {
-                return renderLine('最高分', game.score);
-              }),
-              // renderLine('消除行', 4),
-              // renderLine('级别', 1),
-              // renderLine('下一个', 2),
-              Consumer<GameProvider>(builder: (ctx, game, child) {
-                return ShadowSquare(
+              Container(
+                margin: EdgeInsets.only(bottom: 20.w),
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text(
+                    '${game.score}',
+                    style: TextStyle(
+                      fontSize: 25.w,
+                      decoration: TextDecoration.none,
+                      color: Colors.black,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: 20.w),
+                child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Text(
+                    'HI-SCORE',
+                    style: TextStyle(
+                      fontSize: 12.w,
+                      decoration: TextDecoration.none,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                height: 80.w,
+                margin: EdgeInsets.only(bottom: 20.w),
+                child: ShadowSquare(
                   squares: game.nextSquares,
                   opacity: 0,
-                );
-              }),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: 10.w),
+                child: Align(
+                  child: Text(
+                    '11',
+                    style: TextStyle(
+                      fontSize: 30.w,
+                      decoration: TextDecoration.none,
+                      color: Colors.black,
+                      fontWeight: FontWeight.normal,
+                      letterSpacing: 20.w,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: 20.w),
+                child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Text(
+                    'SPEED LEVEL',
+                    style: TextStyle(
+                      fontSize: 12.w,
+                      decoration: TextDecoration.none,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                height: 80.w,
+                // color: Colors.black,
+                margin: EdgeInsets.only(bottom: 20.w),
+                child: null,
+              ),
+              Container(
+                child: Heartbeat(
+                  child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      'GAME OVER',
+                      style: TextStyle(
+                        fontSize: 12.w,
+                        decoration: TextDecoration.none,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           );
         },

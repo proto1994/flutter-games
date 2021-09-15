@@ -19,11 +19,11 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => StartProvider()),
       ],
       child: MaterialApp(
-        title: '俄罗斯方块',
+        title: 'BRICK GAME',
         theme: ThemeData(
           primarySwatch: Colors.yellow,
         ),
-        home: SquareGames(title: '俄罗斯方块'),
+        home: SquareGames(title: 'BRICK GAME'),
       ),
     );
   }

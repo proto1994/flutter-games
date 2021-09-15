@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../Widgets/shadowSquare.dart';
+import '../components/shadowSquare.dart';
 import '../controller/constants.dart';
 
 import '../games/handle.dart';
@@ -51,7 +51,7 @@ class _SquareGamesState extends State<SquareGames> {
         children: <Widget>[
           renderPattern(demoSquareLeft),
           Container(
-            width: 480.w,
+            width: 440.w,
             height: 524.w,
             decoration: BoxDecoration(
               border: Border(

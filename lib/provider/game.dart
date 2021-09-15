@@ -26,14 +26,14 @@ class GameProvider with ChangeNotifier {
 
   changeGame() {
     this.bgm.pause();
-    if (this._gameIndex >= 2) return;
+    if (this._gameIndex >= 1) return;
     this._gameIndex++;
     this.gameInstance = new Game(this._gameIndex);
     notifyListeners();
   }
 
   changeLevel(num index) {
-    if (this._gameLevel >= 2) return;
+    if (this._gameLevel >= 1) return;
     this._gameLevel += index;
     notifyListeners();
   }
