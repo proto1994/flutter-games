@@ -60,9 +60,9 @@ class _ScoreState extends State<ScorePanel> {
       ),
       child: Consumer<GameProvider>(
         builder: (ctx, game, child) {
-          // if (game.isGameOff()) {
-          //   return Container(child: null);
-          // }
+          if (game.isGameOff()) {
+            return Container(child: null);
+          }
           return new Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,10 +101,12 @@ class _ScoreState extends State<ScorePanel> {
               Container(
                 height: 80.w,
                 margin: EdgeInsets.only(bottom: 20.w),
-                child: ShadowSquare(
-                  squares: game.nextSquares,
-                  opacity: 0,
-                ),
+                child: game.isStart
+                    ? ShadowSquare(
+                        squares: game.nextSquares,
+                        opacity: 0,
+                      )
+                    : null,
               ),
               Container(
                 margin: EdgeInsets.only(bottom: 10.w),
@@ -142,22 +144,23 @@ class _ScoreState extends State<ScorePanel> {
                 margin: EdgeInsets.only(bottom: 20.w),
                 child: null,
               ),
-              Container(
-                child: Heartbeat(
-                  child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      'GAME OVER',
-                      style: TextStyle(
-                        fontSize: 12.w,
-                        decoration: TextDecoration.none,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
+              if (!game.isStart)
+                Container(
+                  child: Heartbeat(
+                    child: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        'GAME OVER',
+                        style: TextStyle(
+                          fontSize: 12.w,
+                          decoration: TextDecoration.none,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
             ],
           );
         },

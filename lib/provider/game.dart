@@ -4,7 +4,7 @@ import '../controller/game.dart';
 import '../constants/enum.dart';
 
 class GameProvider with ChangeNotifier {
-  int _gameIndex;
+  int _gameIndex; // -1 关闭  0 启动动画 1/2/3关卡
   int _gameLevel;
   bool _isStart;
   bool _isGameOver;
@@ -73,7 +73,7 @@ class GameProvider with ChangeNotifier {
   }
 
   onPause() {
-    if (this.isGameStart()) {
+    if (this.isGameLoading()) {
       this.changeGame();
       return;
     }
@@ -88,7 +88,7 @@ class GameProvider with ChangeNotifier {
   }
 
   onSound() {
-    if (this.isGameStart()) {
+    if (this.isGameLoading()) {
       this.changeGame();
       return;
     }
@@ -107,7 +107,7 @@ class GameProvider with ChangeNotifier {
   }
 
   onLeft() {
-    if (this.isGameStart()) {
+    if (this.isGameLoading()) {
       this.changeGame();
       return;
     }
@@ -116,7 +116,7 @@ class GameProvider with ChangeNotifier {
   }
 
   onRight() {
-    if (this.isGameStart()) {
+    if (this.isGameLoading()) {
       this.changeGame();
       return;
     }
@@ -128,7 +128,7 @@ class GameProvider with ChangeNotifier {
     if (this._isGameOver) {
       return;
     }
-    if (this.isGameStart()) {
+    if (this.isGameLoading()) {
       this.changeGame();
       return;
     }
@@ -145,7 +145,7 @@ class GameProvider with ChangeNotifier {
     if (this._isGameOver) {
       return;
     }
-    if (this.isGameStart()) {
+    if (this.isGameLoading()) {
       this.changeGame();
       return;
     }
@@ -158,7 +158,7 @@ class GameProvider with ChangeNotifier {
   }
 
   onRotate() {
-    if (this.isGameStart()) {
+    if (this.isGameLoading()) {
       this.changeGame();
       return;
     }
@@ -187,7 +187,7 @@ class GameProvider with ChangeNotifier {
     return this._gameIndex == -1;
   }
 
-  isGameStart() {
+  isGameLoading() {
     return this._gameIndex == 0;
   }
 
